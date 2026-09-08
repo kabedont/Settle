@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(30),
     email VARCHAR(255),
-    password VARCHAR(255),
+    password_hash VARCHAR(255),
     created_at TIMESTAMP
 ); 
 
