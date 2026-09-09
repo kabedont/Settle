@@ -6,6 +6,7 @@ const app = express();
 
 app.use(cors());
 app.use (express.json());
+app.use("/api/auth", authRouter);
 
 app.get('/api/test', (req, res) => {
     res.json({message: 'Settle backend is running!'});
