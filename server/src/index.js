@@ -9,7 +9,7 @@ const passport = require("passport");
 app.use(cors());
 app.use (express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
 app.use(passport.session());
 app.use("/api/auth", authRouter);
 
