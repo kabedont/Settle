@@ -5,6 +5,7 @@ const app = express();
 const authRouter = require('./routes/authRouter');
 const session = require("express-session");
 const passport = require("passport");
+require("./config/passport");
 
 app.use(cors());
 app.use (express.json());
