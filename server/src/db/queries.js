@@ -1,5 +1,6 @@
 const pool = require("./pool");
 
+//USERS
 async function signUpInformation (name, email, password_hash) {
     await pool.query("INSERT INTO users(name, email, password_hash, created_at) VALUES ($1, $2, $3, NOW())", [name, email, password_hash]);
 }
@@ -19,6 +20,7 @@ async function getUserById (id) {
     return rows;
 }
 
+//GROUPS
 async function insertGroup (name, created_by) {
     await pool.query("INSERT INTO groups(name, created_by, created_at) VALUES ($1, $2, NOW())", [name, created_by]);
 }
@@ -46,6 +48,30 @@ async function deleteGroup (id) {
 }
 
 
+//EXPENSES
+async function insertExpenses (group_id, paid_by, amount, currency, description){
+    await pool.query("INSERT INTO expenses(group_id, paid_by, amount, currency, description, date) VALUES ($1, $2, $3, $4, $5, NOW())", [group_id, paid_by, amount, currency, description]);
+}
+
+async function getAllExpenses () {
+    const {rows} = await pool.query (
+        "SELECT * FROM expenses"
+    );
+    return rows;
+}
+
+async function getExpenseById (id) {
+    const {rows} = await pool.query (
+        "SELECT * FROM expenses WHERE id = $1", [id]
+    );
+    return rows;
+}
+
+async function deleteExpense (id) {
+    await pool.query ("DELETE FROM expenses WHERE id=$1", [id]);
+}
+
+
 module.exports = {
     signUpInformation, 
     getUserByEmail, 
@@ -54,5 +80,9 @@ module.exports = {
     getAllGroups,
     getGroupById,
     addMember,
-    deleteGroup
+    deleteGroup,
+    insertExpenses,
+    getAllExpenses,
+    getExpenseById,
+    deleteExpense
 };
