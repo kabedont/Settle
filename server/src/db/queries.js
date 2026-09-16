@@ -71,6 +71,18 @@ async function deleteExpense (id) {
     await pool.query ("DELETE FROM expenses WHERE id=$1", [id]);
 }
 
+//MEMBERS (FOR EXPENSE SPLITS)
+async function getMembersByGroupId (group_id) {
+    const {rows} = await pool.query (
+        "SELECT * FROM members WHERE group_id = $1", [group_id]
+    );
+    return rows;
+}
+
+//EXPENSE SPLITS
+async function insertExpenseSplits (expenses_id, user_id, amount_owed) {
+    await pool.query ("INSERT INTO expense_splits(expenses_id, user_id, amount_owed) VALUES ($1, $2, $3)", [expenses_id, user_id, amount_owed]);
+}
 
 module.exports = {
     signUpInformation, 
@@ -84,5 +96,7 @@ module.exports = {
     insertExpenses,
     getAllExpenses,
     getExpenseById,
-    deleteExpense
+    deleteExpense,
+    getMembersByGroupId,
+    insertExpenseSplits
 };
