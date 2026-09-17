@@ -50,7 +50,8 @@ async function deleteGroup (id) {
 
 //EXPENSES
 async function insertExpenses (group_id, paid_by, amount, currency, description){
-    await pool.query("INSERT INTO expenses(group_id, paid_by, amount, currency, description, date) VALUES ($1, $2, $3, $4, $5, NOW())", [group_id, paid_by, amount, currency, description]);
+    const {rows} = await pool.query("INSERT INTO expenses(group_id, paid_by, amount, currency, description, date) VALUES ($1, $2, $3, $4, $5, NOW()) RETURNING id", [group_id, paid_by, amount, currency, description]);
+    return rows[0].id;
 }
 
 async function getAllExpenses () {
