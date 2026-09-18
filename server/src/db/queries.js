@@ -85,6 +85,19 @@ async function insertExpenseSplits (expenses_id, user_id, amount_owed) {
     await pool.query ("INSERT INTO expense_splits(expenses_id, user_id, amount_owed) VALUES ($1, $2, $3)", [expenses_id, user_id, amount_owed]);
 }
 
+//SETTLEMENTS
+async function insertSettlements (group_id, from_user, to_user, amount, currency){
+    await pool.query("INSERT INTO settlements(group_id, from_user, to_user, amount, currency, paid_at) VALUES ($1, $2, $3, $4, $5, NOW())", [group_id, from_user, to_user, amount, currency]);
+}
+
+async function getAllSettlements () {
+    const {rows} = await pool.query (
+        "SELECT * FROM settlements"
+    );
+    return rows;
+}
+
+
 module.exports = {
     signUpInformation, 
     getUserByEmail, 
@@ -99,5 +112,7 @@ module.exports = {
     getExpenseById,
     deleteExpense,
     getMembersByGroupId,
-    insertExpenseSplits
+    insertExpenseSplits,
+    insertSettlements,
+    getAllSettlements
 };
