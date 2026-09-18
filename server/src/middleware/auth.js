@@ -1,3 +1,6 @@
+//middleware to run before controller
+//if not logged in, stop
+//if logged in, run next() and continue to controller
 function isAuthenticated(req, res, next) {
     if (req.user) {
         return next();
