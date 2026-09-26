@@ -20,8 +20,17 @@ async function loginGet(req, res){
     res.render("login");
 }
 
+async function meGet(req, res) {
+    const user = req.user;
+    if (!user) return res.status(401).json({ message: "cannot get user" });
+    else {
+        return res.status(200).json({ name: user.name });
+    }
+}
+
 module.exports = {
     registerGet,
     registerPost,
     loginGet,
+    meGet
 }

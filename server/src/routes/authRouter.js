@@ -16,5 +16,6 @@ authRouter.post("/log-in", (req, res, next) => {
         });
     })(req, res, next);
 });
+authRouter.get("/me", authController.meGet);
 
 module.exports = authRouter;

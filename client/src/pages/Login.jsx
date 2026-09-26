@@ -49,7 +49,7 @@ function Login() {
                 
                 <div>Don't have an account? <a href="/register">Register</a>!</div>
 
-                <button type="submit">Submit</button>
+                <button type="submit">Log in</button>
             </form>
         </>
     )
