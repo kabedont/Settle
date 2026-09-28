@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Home() {
     const[user, setUser] = useState("");
@@ -39,7 +39,11 @@ function Home() {
             <div>Groups List</div>
             <button type="button" onClick={handleCreate}>Create group</button>
             {groups.map((group) => (
-                <div key={group.id} className="groups-list">{group.name}</div>
+                <Link key={group.id} to={`/group/${group.id}`}>
+                    <div className="groups-list">
+                        {group.name}
+                    </div>
+                </Link>
             ))}
         </>
     )
