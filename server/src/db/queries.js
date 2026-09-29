@@ -75,7 +75,9 @@ async function deleteExpense (id) {
 //MEMBERS (FOR EXPENSE SPLITS)
 async function getMembersByGroupId (group_id) {
     const {rows} = await pool.query (
-        "SELECT * FROM members WHERE group_id = $1", [group_id]
+        `SELECT users.id, users.name FROM members 
+        JOIN users ON members.user_id = users.id 
+        WHERE group_id = $1`, [group_id]
     );
     return rows;
 }

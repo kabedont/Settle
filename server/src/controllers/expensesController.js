@@ -8,7 +8,7 @@ async function createExpenses(req, res) {
     const members = await db.getMembersByGroupId(group_id);
     const share = amount / members.length;
     for (const member of members) {
-        await db.insertExpenseSplits(expense_id, member.user_id, share);
+        await db.insertExpenseSplits(expense_id, member.id, share);
     }
     res.json({message: "expense created"});
 }
