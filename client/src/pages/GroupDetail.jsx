@@ -21,6 +21,7 @@ function GroupDetail() {
     return(
         <>
             <div className="group-name">{group.name}</div>
+            <div>{group.creator_name} at {group.created_at}</div>
         </>
     )
 }

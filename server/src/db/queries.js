@@ -34,7 +34,10 @@ async function getAllGroups () {
 
 async function getGroupById (id) {
     const {rows} = await pool.query(
-        "SELECT * FROM groups WHERE id = $1", [id]
+        `SELECT groups.name, groups.created_at, users.name AS creator_name
+        FROM groups
+        JOIN users ON groups.created_by = users.id
+        WHERE groups.id = $1`, [id]
     );
     return rows;
 }
