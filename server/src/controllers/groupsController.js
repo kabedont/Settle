@@ -24,6 +24,12 @@ async function addMember(req, res) {
     res.json({message: "Member added successfully"});
 }
 
+async function getMember(req, res) {
+    const group_id = req.params.id;
+    const members = await db.getMembersByGroupId(group_id);
+    res.json(members);
+}
+
 async function deleteGroup(req, res) {
     const id = req.params.id;
     await db.deleteGroup(id);
@@ -35,5 +41,6 @@ module.exports = {
     getAllGroups,
     getOneGroup,
     addMember,
+    getMember,
     deleteGroup
 };
