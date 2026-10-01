@@ -24,6 +24,12 @@ async function getOneExpense(req, res) {
     res.json(expense[0]);
 }
 
+async function getExpensesByGroupId(req, res) {
+    const group_id = req.params.id;
+    const expenses = await db.getExpensesByGroupId(group_id);
+    res.json(expenses);
+}
+
 async function deleteExpense(req, res) {
     const id = req.params.id;
     await db.deleteExpense(id);
@@ -34,5 +40,6 @@ module.exports = {
     createExpenses,
     getAllExpenses,
     getOneExpense,
+    getExpensesByGroupId,
     deleteExpense
 };

@@ -71,6 +71,16 @@ async function getExpenseById (id) {
     return rows;
 }
 
+async function getExpensesByGroupId(group_id) {
+    const {rows} = await pool.query (
+        `SELECT expenses.*, users.name AS payer_name 
+        FROM expenses 
+        JOIN users ON expenses.paid_by = users.id
+        WHERE group_id = $1`, [group_id]    
+    );
+    return rows;
+}
+
 async function deleteExpense (id) {
     await pool.query ("DELETE FROM expenses WHERE id=$1", [id]);
 }
@@ -115,6 +125,7 @@ module.exports = {
     insertExpenses,
     getAllExpenses,
     getExpenseById,
+    getExpensesByGroupId,
     deleteExpense,
     getMembersByGroupId,
     insertExpenseSplits,
