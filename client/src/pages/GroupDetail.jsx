@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 function GroupDetail() {
     const[group, setGroup] = useState("");
     const[members, setMembers] = useState([]);
+    const[expenses, setExpenses] = useState([]);
     const {id} = useParams();
     const navigate = useNavigate();
 
@@ -23,10 +24,20 @@ function GroupDetail() {
             const list = await fetch(`http://localhost:5000/api/groups/${id}/members`, {
                 credentials: "include",
             })
-        .then(res => res.json());
-        setMembers(list);
+            .then(res => res.json());
+            setMembers(list);
         }
         membersGet();
+
+        //fetch expenses
+        const expensesGet = async (e) => {
+            const list = await fetch(`http://localhost:5000/api/groups/${id}/expenses`, {
+                credentials: "include",
+            })
+            .then(res => res.json());
+            setExpenses(list);
+        }
+        expensesGet();
 
     }, []);
 
@@ -38,6 +49,12 @@ function GroupDetail() {
             {members.map((member) => (
                 <div key={member.id}>{member.name}</div>
             ))}
+            <div>EXPENSES:</div>
+            {expenses.map((expense) => (
+                <div key={expense.id}>{expense.description} — {expense.amount} {expense.currency} (paid by {expense.payer_name})</div>
+            ))}
+
+            {/*TO ADD: create expenses button, settle up button*/}
         </>
     )
 }
