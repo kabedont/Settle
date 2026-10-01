@@ -41,20 +41,33 @@ function GroupDetail() {
 
     }, []);
 
+    //add expense button
+    const handleCreate = (e) => {
+        navigate(`/group/${id}/expense/new`);
+    }
+
+    //settle up button
+    const handleSettle = (e) => {
+        navigate(`/group/${id}/settle/new`);
+    }
+
     return(
         <>
             <div className="group-name">{group.name}</div>
             <div>{group.creator_name} at {group.created_at}</div>
+
             <div>MEMBERS:</div>
             {members.map((member) => (
                 <div key={member.id}>{member.name}</div>
             ))}
+            
             <div>EXPENSES:</div>
             {expenses.map((expense) => (
                 <div key={expense.id}>{expense.description} — {expense.amount} {expense.currency} (paid by {expense.payer_name})</div>
             ))}
 
-            {/*TO ADD: create expenses button, settle up button*/}
+            <button type="button" onClick={handleCreate}>Add Expense</button>
+            <button type="button" onClick={handleSettle}>Settle Up</button>
         </>
     )
 }
