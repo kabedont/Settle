@@ -54,7 +54,7 @@ function GroupDetail() {
     return(
         <>
             <div className="group-name">{group.name}</div>
-            <div>{group.creator_name} at {group.created_at}</div>
+            <div>{group.creator_name} at {new Date(group.created_at).toLocaleString()}</div>
 
             <div>MEMBERS:</div>
             {members.map((member) => (
