@@ -19,7 +19,13 @@ async function getOneGroup(req, res) {
 }
 
 async function addMember(req, res) {
-    const {user_id, group_id} = req.body;
+    const group_id = req.params.id;
+    const {email} = req.body;
+    const user = await db.getUserByEmail(email);
+    if (user.length === 0) { //when no rows came back
+        return res.json({message: "User not found"});
+    }
+    const user_id = user[0].id;
     await db.addMember(user_id, group_id);
     res.json({message: "Member added successfully"});
 }
