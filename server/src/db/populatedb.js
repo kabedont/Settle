@@ -18,7 +18,8 @@ CREATE TABLE IF NOT EXISTS groups (
 
 CREATE TABLE IF NOT EXISTS members (
     group_id INTEGER REFERENCES groups(id),
-    user_id INTEGER REFERENCES users(id)
+    user_id INTEGER REFERENCES users(id),
+    UNIQUE (group_id, user_id)
 );
 
 CREATE TABLE IF NOT EXISTS expenses (

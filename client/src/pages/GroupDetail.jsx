@@ -70,7 +70,8 @@ function GroupDetail() {
         if(response.ok){
             membersGet();
         } else {
-            console.log("User not found.");
+            const data = await response.json();
+            console.log(data.message);
         }
     }
 

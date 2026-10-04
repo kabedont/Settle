@@ -21,15 +21,23 @@ async function getOneGroup(req, res) {
 }
 
 async function addMember(req, res) {
-    const group_id = req.params.id;
-    const {email} = req.body;
-    const user = await db.getUserByEmail(email);
-    if (user.length === 0) { //when no rows came back
-        return res.status(401).json({ message: "User not found." });
+    try {
+        const group_id = req.params.id;
+        const {email} = req.body;
+        const user = await db.getUserByEmail(email);
+        if (user.length === 0) { //when no rows came back
+            return res.status(401).json({ message: "User not found." });
+        }
+        const user_id = user[0].id;
+        await db.addMember(user_id, group_id);
+        res.json({message: "Member added successfully"});
+    } catch (err) {
+        if (err.code === "23505") {
+            res.status(400).json({message: "User already added."});
+        } else {
+            res.status(500).json({message: "Something went wrong."});
+        }
     }
-    const user_id = user[0].id;
-    await db.addMember(user_id, group_id);
-    res.json({message: "Member added successfully"});
 }
 
 async function getMember(req, res) {
