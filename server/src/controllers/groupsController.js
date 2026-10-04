@@ -3,12 +3,14 @@ const db = require("../db/queries");
 async function createGroups(req, res) {
     const {name} = req.body;
     const created_by = req.user.id;
-    await db.insertGroup(name, created_by);
+    const group_id = await db.insertGroup(name, created_by);
+    await db.addMember(created_by, group_id);
     res.json({message: "Group created successfully"});
 }
 
 async function getAllGroups(req, res) {
-    const groups = await db.getAllGroups();
+    const user_id = req.user.id;
+    const groups = await db.getAllGroups(user_id);
     res.json(groups);
 }
 

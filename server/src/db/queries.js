@@ -22,12 +22,15 @@ async function getUserById (id) {
 
 //GROUPS
 async function insertGroup (name, created_by) {
-    await pool.query("INSERT INTO groups(name, created_by, created_at) VALUES ($1, $2, NOW())", [name, created_by]);
+    const {rows} = await pool.query("INSERT INTO groups(name, created_by, created_at) VALUES ($1, $2, NOW()) RETURNING id", [name, created_by]);
+    return rows[0].id;
 }
 
-async function getAllGroups () {
+async function getAllGroups (user_id) {
     const {rows} = await pool.query(
-        "SELECT * FROM groups"
+        `SELECT groups.* FROM groups
+        JOIN members ON groups.id= members.group_id
+        WHERE user_id = $1`, [user_id]
     );
     return rows;
 }
