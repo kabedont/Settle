@@ -28,7 +28,11 @@ async function addMember(req, res) {
         if (user.length === 0) { //when no rows came back
             return res.status(401).json({ message: "User not found." });
         }
+        const loggedin_user = req.user.id;
         const user_id = user[0].id;
+        if  (loggedin_user == user_id) {
+            return res.status(400).json({message: "That's you."});
+        }
         await db.addMember(user_id, group_id);
         res.json({message: "Member added successfully"});
     } catch (err) {
