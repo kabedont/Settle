@@ -72,12 +72,22 @@ function CreateExpense() {
                 />
 
                 <div>Currency:</div>
-                <input
-                    type="text"
+                <select
                     value={currency}
                     onChange={(e) => setCurrency(e.target.value)}
                     required
-                />
+                >
+                    <option value="">Select currency</option>
+                    <option value="CNY">CNY - Chinese Yuan</option>
+                    <option value="USD">USD - US Dollar</option>
+                    <option value="SGD">SGD - Singapore Dollar</option>
+                    <option value="IDR">IDR - Indonesian Rupiah</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="MYR">MYR - Malaysian Ringgit</option>
+                    <option value="KRW">KRW - Korean Won</option>
+                    <option value="JPY">JPY - Japanese Yen</option>
+                    <option value="GBP">GBP - British Pound</option>
+                </select>
 
                 <div>Paid by: {paidBy.name}</div>
 
