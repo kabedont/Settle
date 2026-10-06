@@ -60,6 +60,7 @@ function CreateExpense() {
                     type="text"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
+                    required
                 />
 
                 <div>Amount:</div>
@@ -67,6 +68,7 @@ function CreateExpense() {
                     type="number"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
+                    required
                 />
 
                 <div>Currency:</div>
@@ -74,6 +76,7 @@ function CreateExpense() {
                     type="text"
                     value={currency}
                     onChange={(e) => setCurrency(e.target.value)}
+                    required
                 />
 
                 <div>Paid by: {paidBy.name}</div>

@@ -4,6 +4,9 @@ async function createExpenses(req, res) {
     const paid_by = req.user.id;
     const group_id = req.params.id;
     const {amount, currency, description} = req.body;
+    if (amount === undefined || amount === "" || description.length === 0 || currency.length === 0) {
+        return res.status(400).json({message: "cannot leave field empty"});
+    }
     const expense_id = await db.insertExpenses(group_id, paid_by, amount, currency, description);
     const members = await db.getMembersByGroupId(group_id);
     const share = amount / members.length;
