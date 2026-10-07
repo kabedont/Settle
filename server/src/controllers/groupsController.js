@@ -56,11 +56,41 @@ async function deleteGroup(req, res) {
     res.json({message: "Group deleted successfully"});
 }
 
+//calculate net balance
+async function getBalancesByGroupId (req, res) {
+    const group_id = req.params.id;
+
+    const members = await db.getMembersByGroupId(group_id);
+    const totalPaidList = await db.getTotalPaidByGroupId(group_id);
+    const totalOwedList = await db.getTotalOwedByGroupId(group_id);
+    
+    //build one balance object per member
+    const balances = members.map((member) => {
+        //find this member's row in totalPaidList/totalOwedList (undefined if they're not in it)
+        const paidEntry = totalPaidList.find((p) => p.id === member.id);
+        const owedEntry = totalOwedList.find((o) => o.id === member.id);
+
+        //wrap in Number() since SUM() comes back as a string from postgres
+        const total_paid = paidEntry ? Number(paidEntry.total_paid) : 0; //if not found, default to 0
+        const total_owed = owedEntry ? Number(owedEntry.total_owed) : 0;
+        
+        //positive = this person is owed money overall, negative = they owe money overall
+        return {
+            id: member.id,
+            name: member.name,
+            net_balance: total_paid - total_owed,
+        };
+    });
+
+    res.json(balances);
+}
+
 module.exports = {
     createGroups,
     getAllGroups,
     getOneGroup,
     addMember,
     getMember,
-    deleteGroup
+    deleteGroup,
+    getBalancesByGroupId
 };

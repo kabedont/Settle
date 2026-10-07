@@ -115,6 +115,30 @@ async function getAllSettlements () {
     return rows;
 }
 
+//THE NITTY GRITTY CALCULATIONS
+async function getTotalPaidByGroupId (group_id) {
+    const {rows} = await pool.query (
+        `SELECT users.id, users.name, SUM(expenses.amount) AS total_paid
+        FROM expenses
+        JOIN users on expenses.paid_by = users.id
+        WHERE group_id = $1
+        GROUP BY users.id`, [group_id]
+    );
+    return rows;
+}
+
+async function getTotalOwedByGroupId (group_id) {
+    const {rows} = await pool.query (
+        `SELECT users.id, users.name, SUM(expense_splits.amount_owed) AS total_owed
+        FROM expense_splits
+        JOIN users on expense_splits.user_id = users.id
+        JOIN expenses on expense_splits.expenses_id = expenses.id 
+        WHERE group_id = $1
+        GROUP BY users.id`, [group_id]
+    );
+    return rows;
+}
+
 
 module.exports = {
     signUpInformation, 
@@ -133,5 +157,7 @@ module.exports = {
     getMembersByGroupId,
     insertExpenseSplits,
     insertSettlements,
-    getAllSettlements
+    getAllSettlements,
+    getTotalPaidByGroupId,
+    getTotalOwedByGroupId
 };
