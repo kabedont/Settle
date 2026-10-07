@@ -4,8 +4,10 @@ import { useParams, useNavigate } from "react-router-dom";
 function GroupDetail() {
     const[group, setGroup] = useState("");
     const[email, setEmail] = useState("");
+    const[loggedInUser, setLoggedInUser] = useState("");
     const[members, setMembers] = useState([]);
     const[expenses, setExpenses] = useState([]);
+    const[balance, setBalance] = useState([]);
     const {id} = useParams();
     const navigate = useNavigate();
 
@@ -42,6 +44,26 @@ function GroupDetail() {
         }
         expensesGet();
 
+        //fetch logged in user
+        const userGet = async (e) => {
+            const user = await fetch(`http://localhost:5000/api/auth/me`, {
+                credentials:"include",
+            })
+            .then(res => res.json());
+            setLoggedInUser(user);
+        }
+        userGet();
+
+        //fetch balance
+        const balanceGet = async (e) => {
+            const data = await fetch(`http://localhost:5000/api/groups/${id}/balances`, {
+                credentials: "include",
+            })
+            .then(res => res.json());
+            setBalance(data);
+        }
+        balanceGet();
+
     }, []);
 
     //add expense button
@@ -75,10 +97,23 @@ function GroupDetail() {
         }
     }
 
+    //find logged in user's entry in balance array
+    const myBalance = balance.find((b) => b.id === loggedInUser.id);
+    let balanceText = "Loading...";
+    if (myBalance) {
+        if (myBalance.net_balance >= 0) {
+            balanceText = `YOU ARE OWED ${myBalance.net_balance}`;
+        } else {
+            balanceText = `YOU OWE ${Math.abs(myBalance.net_balance)}`;
+        }
+    }
+
     return(
         <>
             <div className="group-name">{group.name}</div>
             <div>{group.creator_name} at {new Date(group.created_at).toLocaleString()}</div>
+
+            <div>{balanceText}</div>
 
             <div>MEMBERS:</div>
             {members.map((member) => (

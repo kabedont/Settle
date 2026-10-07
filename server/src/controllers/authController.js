@@ -24,7 +24,7 @@ async function meGet(req, res) {
     const user = req.user;
     if (!user) return res.status(401).json({ message: "cannot get user" });
     else {
-        return res.status(200).json({ name: user.name });
+        return res.status(200).json({ id: user.id, name: user.name });
     }
 }
 
