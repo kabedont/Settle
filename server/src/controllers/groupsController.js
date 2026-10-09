@@ -85,6 +85,52 @@ async function getBalancesByGroupId (req, res) {
     res.json(balances);
 }
 
+//calculate net balance between debtor and creditor
+async function getPairwiseBalancesByGroupId(req, res) {
+    const group_id = req.params.id;
+    const rawDebts = await db.getRawDebtsByGroupId(group_id);
+    const members = await db.getMembersByGroupId(group_id);
+
+    const netByPair = {};
+
+    for (const row of rawDebts) {
+        const smaller = Math.min(row.debtor_id, row.creditor_id);
+        const larger = Math.max(row.debtor_id, row.creditor_id);
+        const key = `${smaller}-${larger}`;
+
+        if (!netByPair[key]) netByPair[key] = 0; //first time seeing this pair, start at 0
+
+        if (row.debtor_id === larger) {
+            netByPair[key] += Number(row.total_owed); //larger-id person owes -> positive
+        } else {
+            netByPair[key] -= Number(row.total_owed); //smaller-id person owes -> negative
+        }
+    }
+
+    //turn netByPair (raw keys + signed numbers) into a readable array with actual names
+    const pairwise = [];
+    for(const [key, netAmount] of Object.entries(netByPair)) {
+        if (netAmount === 0) continue; //skip pairs that are fully settled
+
+        const [smallerId, largerId] = key.split("-").map(Number);
+
+        //if netAmount is positive, the "larger" id person owes the "smaller" id person
+        const debtorId = netAmount > 0 ? largerId : smallerId;
+        const creditorId = netAmount > 0 ? smallerId : largerId;
+        
+        const debtor = members.find((m) => m.id === debtorId);
+        const creditor = members.find((m) => m.id === creditorId);
+        
+        pairwise.push({
+            debtor_name: debtor.name,
+            creditor_name: creditor.name,
+            amount: Math.abs(netAmount), //always positive
+        });
+    }
+
+    res.json(pairwise);
+}
+
 module.exports = {
     createGroups,
     getAllGroups,
@@ -92,5 +138,6 @@ module.exports = {
     addMember,
     getMember,
     deleteGroup,
-    getBalancesByGroupId
+    getBalancesByGroupId,
+    getPairwiseBalancesByGroupId
 };

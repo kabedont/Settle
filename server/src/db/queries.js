@@ -139,6 +139,21 @@ async function getTotalOwedByGroupId (group_id) {
     return rows;
 }
 
+async function getRawDebtsByGroupId (group_id) {
+    const {rows} = await pool.query (
+        `SELECT expense_splits.user_id AS debtor_id,
+                expenses.paid_by AS creditor_id,
+                SUM(expense_splits.amount_owed) AS total_owed
+        FROM expense_splits
+        JOIN expenses on expense_splits.expenses_id = expenses.id
+        WHERE expenses.group_id = $1 
+          AND expense_splits.user_id != expenses.paid_by
+        GROUP BY expense_splits.user_id, expenses.paid_by
+        `, [group_id]
+    );
+    return rows;
+}
+
 
 module.exports = {
     signUpInformation, 
@@ -159,5 +174,6 @@ module.exports = {
     insertSettlements,
     getAllSettlements,
     getTotalPaidByGroupId,
-    getTotalOwedByGroupId
+    getTotalOwedByGroupId,
+    getRawDebtsByGroupId
 };

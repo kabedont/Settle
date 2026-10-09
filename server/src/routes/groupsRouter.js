@@ -12,6 +12,7 @@ groupsRouter.get("/:id/members", isAuthenticated, groupsController.getMember);
 groupsRouter.delete("/:id", isAuthenticated, groupsController.deleteGroup);
 groupsRouter.post("/:id/expenses", isAuthenticated, expensesController.createExpenses);
 groupsRouter.get("/:id/expenses", isAuthenticated, expensesController.getExpensesByGroupId);
-groupsRouter.get("/:id/balances", isAuthenticated, groupsController.getBalancesByGroupId)
+groupsRouter.get("/:id/balances", isAuthenticated, groupsController.getBalancesByGroupId);
+groupsRouter.get("/:id/pairwise-balances", isAuthenticated, groupsController.getPairwiseBalancesByGroupId);
 
 module.exports = groupsRouter;
