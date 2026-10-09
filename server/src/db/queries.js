@@ -2,7 +2,8 @@ const pool = require("./pool");
 
 //USERS
 async function signUpInformation (name, email, password_hash) {
-    await pool.query("INSERT INTO users(name, email, password_hash, created_at) VALUES ($1, $2, $3, NOW())", [name, email, password_hash]);
+    const {rows} = await pool.query("INSERT INTO users(name, email, password_hash, created_at) VALUES ($1, $2, $3, NOW()) RETURNING id", [name, email, password_hash]);
+    return rows[0].id;
 }
 
 async function getUserByEmail (email) {

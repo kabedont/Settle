@@ -5,8 +5,14 @@ async function registerPost(req, res){
     try {
         const {name, email, password} = req.body;
         const password_hash = await bcrypt.hash(req.body.password, 10);
-        await db.signUpInformation (name, email, password_hash);
-        res.status(201).json({message: "user created"});
+        const user_id = await db.signUpInformation(name, email, password_hash);
+
+        req.logIn({ id: user_id }, (err) => {
+            if (err) {
+                return res.status(500).json({ message: "login after registration failed" });
+            }
+            return res.status(201).json({ message: "registered", user: { id: user_id, email, name } });
+        });
     } catch (err) {
         res.status(400).json({message: "registration failed", error: err.message});
     }
