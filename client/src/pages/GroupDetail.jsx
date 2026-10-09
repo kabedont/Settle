@@ -8,6 +8,7 @@ function GroupDetail() {
     const[members, setMembers] = useState([]);
     const[expenses, setExpenses] = useState([]);
     const[balance, setBalance] = useState([]);
+    const[pairwiseBalance, setPairwiseBalance] = useState([]);
     const {id} = useParams();
     const navigate = useNavigate();
 
@@ -63,6 +64,16 @@ function GroupDetail() {
             setBalance(data);
         }
         balanceGet();
+
+        //fetch pairwise balance
+        const pairwiseBalanceGet = async (e) => {
+            const data = await fetch(`http://localhost:5000/api/groups/${id}/pairwise-balances`, {
+                credentials: "include",
+            })
+            .then(res => res.json());
+            setPairwiseBalance(data);
+        }
+        pairwiseBalanceGet();
 
     }, []);
 
@@ -128,6 +139,12 @@ function GroupDetail() {
                 />
                 <button type="submit">Add Member</button>
             </form>
+
+            {pairwiseBalance.map((pair) => (
+                <div key={`${pair.debtor_name}-${pair.creditor_name}`}>
+                    {pair.debtor_name} owes {pair.creditor_name} {pair.amount}
+                </div>
+            ))}
             
             <div>EXPENSES:</div>
             {expenses.map((expense) => (
