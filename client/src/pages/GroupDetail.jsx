@@ -126,6 +126,12 @@ function GroupDetail() {
 
             <div>{balanceText}</div>
 
+            {pairwiseBalance.map((pair) => (
+                <div key={`${pair.debtor_name}-${pair.creditor_name}`}>
+                    {pair.debtor_name} owes {pair.creditor_name} {pair.amount.toFixed(2)}
+                </div>
+            ))}
+
             <div>MEMBERS:</div>
             {members.map((member) => (
                 <div key={member.id}>{member.name}</div>
@@ -139,12 +145,6 @@ function GroupDetail() {
                 />
                 <button type="submit">Add Member</button>
             </form>
-
-            {pairwiseBalance.map((pair) => (
-                <div key={`${pair.debtor_name}-${pair.creditor_name}`}>
-                    {pair.debtor_name} owes {pair.creditor_name} {pair.amount.toFixed(2)}
-                </div>
-            ))}
             
             <div>EXPENSES:</div>
             {expenses.map((expense) => (
