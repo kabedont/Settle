@@ -113,9 +113,9 @@ function GroupDetail() {
     let balanceText = "Loading...";
     if (myBalance) {
         if (myBalance.net_balance >= 0) {
-            balanceText = `YOU ARE OWED ${myBalance.net_balance}`;
+            balanceText = `YOU ARE OWED ${myBalance.net_balance.toFixed(2)}`;
         } else {
-            balanceText = `YOU OWE ${Math.abs(myBalance.net_balance)}`;
+            balanceText = `YOU OWE ${Math.abs(myBalance.net_balance.toFixed(2))}`;
         }
     }
 
@@ -142,7 +142,7 @@ function GroupDetail() {
 
             {pairwiseBalance.map((pair) => (
                 <div key={`${pair.debtor_name}-${pair.creditor_name}`}>
-                    {pair.debtor_name} owes {pair.creditor_name} {pair.amount}
+                    {pair.debtor_name} owes {pair.creditor_name} {pair.amount.toFixed(2)}
                 </div>
             ))}
             
