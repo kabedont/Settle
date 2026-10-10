@@ -122,7 +122,9 @@ async function getPairwiseBalancesByGroupId(req, res) {
         const creditor = members.find((m) => m.id === creditorId);
         
         pairwise.push({
+            debtor_id: debtor.id,
             debtor_name: debtor.name,
+            creditor_id: creditor.id,
             creditor_name: creditor.name,
             amount: Math.abs(netAmount), //always positive
         });
