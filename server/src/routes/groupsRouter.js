@@ -2,6 +2,7 @@ const {Router} = require("express");
 const groupsRouter = Router();
 const groupsController = require("../controllers/groupsController");
 const expensesController = require("../controllers/expensesController");
+const settlementsController = require("../controllers/settlementsController");
 const isAuthenticated = require("../middleware/auth");
 
 groupsRouter.post("/", isAuthenticated, groupsController.createGroups);
@@ -14,5 +15,6 @@ groupsRouter.post("/:id/expenses", isAuthenticated, expensesController.createExp
 groupsRouter.get("/:id/expenses", isAuthenticated, expensesController.getExpensesByGroupId);
 groupsRouter.get("/:id/balances", isAuthenticated, groupsController.getBalancesByGroupId);
 groupsRouter.get("/:id/pairwise-balances", isAuthenticated, groupsController.getPairwiseBalancesByGroupId);
+groupsRouter.post("/:id/settlements", isAuthenticated, settlementsController.createSettlement);
 
 module.exports = groupsRouter;

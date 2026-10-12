@@ -1,4 +1,112 @@
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+
 function CreateSettlement() {
-    return <div>create settlement page</div>
+    //from_user, to_user, amount, currency
+    const[loggedInUser, setLoggedInUser] = useState("");
+    const[userOwedList, setUserOwedList] = useState([]);
+    const[userOwed, setUserOwed] = useState("");
+    const[amountOwed, setAmountOwed] = useState("");
+    const[currency, setCurrency] = useState("");
+    const {id} = useParams();
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        //fetch logged in user, pairwise balances, and filter
+        const fetchData = async (e) => {
+            
+            //fetch logged in user FIRST, and wait
+            const user = await fetch(`http://localhost:5000/api/auth/me`, {
+                credentials:"include",
+            })
+            .then(res => res.json());
+            setLoggedInUser(user);
+
+            //fetch pairwise balance (user owed list)
+            const pair = await fetch(`http://localhost:5000/api/groups/${id}/pairwise-balances`, {
+                credentials:"include",
+            })
+            .then(res => res.json());
+
+            //filter down to only pairs where the logged in user is the debtor
+            const owedByMe = pair.filter((p) => p.debtor_id === user.id);
+            setUserOwedList(owedByMe);
+        }
+        fetchData();
+
+    }, []);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const response = await fetch(`http://localhost:5000/api/groups/${id}/settlements`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({to_user: userOwed, amount: amountOwed, currency}),
+        })
+
+        if(response.ok){
+            console.log(response.status);
+            navigate(`/group/${id}`);
+        } else {
+            const data = await response.json();
+            console.log(data.message);
+        }
+    }
+
+    return(
+        <>
+            <form onSubmit={handleSubmit}>
+
+                <div>FROM: {loggedInUser.name}</div>
+
+                <div>TO: </div>
+                <select
+                    value={userOwed}
+                    onChange={(e) => setUserOwed(e.target.value)}
+                >
+                    <option value="">Select who to pay</option>
+                    {userOwedList.map((entry) => (
+                        <option key={entry.creditor_id} value={entry.creditor_id}>
+                            {entry.creditor_name}
+                        </option>
+                    ))}
+
+                </select>
+
+                <div>AMOUNT: </div>
+                <input
+                    type="number"
+                    value={amountOwed}
+                    onChange={(e) => setAmountOwed(e.target.value)}
+                />
+
+                <div>CURRENCY: </div>
+                <select
+                    value={currency}
+                    onChange={(e) => setCurrency(e.target.value)}
+                    required
+                >
+                    <option value="">Select currency</option>
+                    <option value="CNY">CNY - Chinese Yuan</option>
+                    <option value="USD">USD - US Dollar</option>
+                    <option value="SGD">SGD - Singapore Dollar</option>
+                    <option value="IDR">IDR - Indonesian Rupiah</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="MYR">MYR - Malaysian Ringgit</option>
+                    <option value="KRW">KRW - Korean Won</option>
+                    <option value="JPY">JPY - Japanese Yen</option>
+                    <option value="GBP">GBP - British Pound</option>
+                </select>
+
+                <button type="submit">Settle Up</button>
+            </form>
+        </>
+    )
 }
+
 export default CreateSettlement;
