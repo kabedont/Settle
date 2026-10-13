@@ -90,9 +90,11 @@ async function getPairwiseBalancesByGroupId(req, res) {
     const group_id = req.params.id;
     const rawDebts = await db.getRawDebtsByGroupId(group_id);
     const members = await db.getMembersByGroupId(group_id);
+    const settlements = await db.getSettlementsByGroupId(group_id);
 
     const netByPair = {};
 
+    //CALCULATING TOTAL DEBTS OWED
     for (const row of rawDebts) {
         const smaller = Math.min(row.debtor_id, row.creditor_id);
         const larger = Math.max(row.debtor_id, row.creditor_id);
@@ -107,10 +109,25 @@ async function getPairwiseBalancesByGroupId(req, res) {
         }
     }
 
+    //CALCULATING TOTAL SETTLEMENTS
+    for (const row of settlements) {
+        const smaller = Math.min(row.from_user, row.to_user);
+        const larger = Math.max(row.from_user, row.to_user);
+        const key = `${smaller}-${larger}`;
+
+        if (!netByPair[key]) netByPair[key] = 0;
+
+        if (row.from_user === larger) {
+            netByPair[key] -= Number(row.amount); //larger-id person settles -> negative
+        } else {
+            netByPair[key] += Number(row.amount); //smaller-id person settles -> positive
+        }
+    }
+
     //turn netByPair (raw keys + signed numbers) into a readable array with actual names
     const pairwise = [];
     for(const [key, netAmount] of Object.entries(netByPair)) {
-        if (netAmount === 0) continue; //skip pairs that are fully settled
+        if (Math.abs(netAmount) < 0.01) continue; //skip pairs that are fully settled
 
         const [smallerId, largerId] = key.split("-").map(Number);
 

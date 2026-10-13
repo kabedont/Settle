@@ -155,6 +155,14 @@ async function getRawDebtsByGroupId (group_id) {
     return rows;
 }
 
+async function getSettlementsByGroupId (group_id) {
+    const {rows} = await pool.query (
+        `SELECT from_user, to_user, amount, currency FROM settlements
+        WHERE group_id = $1`, [group_id]
+    );
+    return rows;
+}
+
 
 module.exports = {
     signUpInformation, 
@@ -176,5 +184,6 @@ module.exports = {
     getAllSettlements,
     getTotalPaidByGroupId,
     getTotalOwedByGroupId,
-    getRawDebtsByGroupId
+    getRawDebtsByGroupId,
+    getSettlementsByGroupId
 };
