@@ -61,6 +61,7 @@ async function getBalancesByGroupId (req, res) {
     const group_id = req.params.id;
 
     const members = await db.getMembersByGroupId(group_id);
+    const totalSettlements = await db.getSettlementsByGroupId(group_id);
     const totalPaidList = await db.getTotalPaidByGroupId(group_id);
     const totalOwedList = await db.getTotalOwedByGroupId(group_id);
     
@@ -73,12 +74,27 @@ async function getBalancesByGroupId (req, res) {
         //wrap in Number() since SUM() comes back as a string from postgres
         const total_paid = paidEntry ? Number(paidEntry.total_paid) : 0; //if not found, default to 0
         const total_owed = owedEntry ? Number(owedEntry.total_owed) : 0;
+
+        //settling logic
+        const paidOut = totalSettlements
+            .filter((s) => s.from_user === member.id)
+            .reduce((sum, s) => sum + Number(s.amount), 0);
+        
+        const receivedBack = totalSettlements
+            .filter((s) => s.to_user === member.id)
+            .reduce((sum, s) => sum + Number(s.amount), 0);
+
+        //total
+        let netAmount =  (total_paid + paidOut) - (total_owed + receivedBack) 
+
+        //handle floating-point residue issue
+        if (Math.abs(netAmount) < 0.01) netAmount = 0; 
         
         //positive = this person is owed money overall, negative = they owe money overall
         return {
             id: member.id,
             name: member.name,
-            net_balance: total_paid - total_owed,
+            net_balance: netAmount
         };
     });
 
