@@ -67,34 +67,33 @@ async function getBalancesByGroupId (req, res) {
     
     //build one balance object per member
     const balances = members.map((member) => {
-        //find this member's row in totalPaidList/totalOwedList (undefined if they're not in it)
-        const paidEntry = totalPaidList.find((p) => p.id === member.id);
-        const owedEntry = totalOwedList.find((o) => o.id === member.id);
+        //grab every currency-row belonging to this member (can >=1)
+        const paidEntries = totalPaidList.filter((p) => p.id === member.id);
+        const owedEntries = totalOwedList.filter((o) => o.id === member.id);
 
-        //wrap in Number() since SUM() comes back as a string from postgres
-        const total_paid = paidEntry ? Number(paidEntry.total_paid) : 0; //if not found, default to 0
-        const total_owed = owedEntry ? Number(owedEntry.total_owed) : 0;
-
-        //settling logic
-        const paidOut = totalSettlements
-            .filter((s) => s.from_user === member.id)
-            .reduce((sum, s) => sum + Number(s.amount), 0);
+        //collect every currency that appears, for this member, in either list
+        const currencies = new Set([
+            ...paidEntries.map((p) => p.currency),
+            ...owedEntries.map((o) => o.currency)
+        ])
         
-        const receivedBack = totalSettlements
-            .filter((s) => s.to_user === member.id)
-            .reduce((sum, s) => sum + Number(s.amount), 0);
+        //net paid vs owed, separately for each currency
+        const balancesByCurrency = {};
+        for(const currency of currencies) {
+            const paidEntry = paidEntries.find((p) => p.currency === currency);
+            const owedEntry = owedEntries.find((o) => o.currency === currency);
 
-        //total
-        let netAmount =  (total_paid + paidOut) - (total_owed + receivedBack) 
+            //wrap in Number() since SUM() comes back as a string from postgres
+            const paid = paidEntry ? Number(paidEntry.total_paid) : 0; //if not found, default to 0
+            const owed = owedEntry ? Number(owedEntry.total_owed) : 0;
 
-        //handle floating-point residue issue
-        if (Math.abs(netAmount) < 0.01) netAmount = 0; 
+            balancesByCurrency[currency] = paid - owed; //positive = owed money in this currency, negative: owes
+        }
         
-        //positive = this person is owed money overall, negative = they owe money overall
         return {
             id: member.id,
             name: member.name,
-            net_balance: netAmount
+            balances: balancesByCurrency
         };
     });
 
