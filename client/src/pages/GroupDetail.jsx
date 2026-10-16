@@ -110,25 +110,27 @@ function GroupDetail() {
 
     //find logged in user's entry in balance array
     const myBalance = balance.find((b) => b.id === loggedInUser.id);
-    let balanceText = "Loading...";
-    if (myBalance) {
-        if (myBalance.net_balance >= 0) {
-            balanceText = `YOU ARE OWED ${myBalance.net_balance.toFixed(2)}`;
-        } else {
-            balanceText = `YOU OWE ${Math.abs(myBalance.net_balance.toFixed(2))}`;
-        }
-    }
 
     return(
         <>
             <div className="group-name">{group.name}</div>
             <div>{group.creator_name} at {new Date(group.created_at).toLocaleString()}</div>
 
-            <div>{balanceText}</div>
+            <div>
+                {myBalance
+                    ? Object.entries(myBalance.balances).map(([currency, amount]) => (
+                        <div key={currency}>
+                            {amount >= 0
+                                ? `YOU ARE OWED ${amount.toFixed(2)} ${currency}`
+                                : `YOU OWE ${Math.abs(amount).toFixed(2)} ${currency}`}
+                        </div>
+                    ))
+                    : "Loading..."}
+            </div>
 
             {pairwiseBalance.map((pair) => (
                 <div key={`${pair.debtor_id}-${pair.creditor_id}`}>
-                    {pair.debtor_name} owes {pair.creditor_name} {pair.amount.toFixed(2)}
+                    {pair.debtor_name} owes {pair.creditor_name} {pair.amount.toFixed(2)} {pair.currency}
                 </div>
             ))}
 
