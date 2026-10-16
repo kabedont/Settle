@@ -124,7 +124,7 @@ async function getPairwiseBalancesByGroupId(req, res) {
     for (const row of rawDebts) {
         const smaller = Math.min(row.debtor_id, row.creditor_id);
         const larger = Math.max(row.debtor_id, row.creditor_id);
-        const key = `${smaller}-${larger}`;
+        const key = `${smaller}-${larger}-${row.currency}`;
 
         if (!netByPair[key]) netByPair[key] = 0; //first time seeing this pair, start at 0
 
@@ -139,7 +139,7 @@ async function getPairwiseBalancesByGroupId(req, res) {
     for (const row of settlements) {
         const smaller = Math.min(row.from_user, row.to_user);
         const larger = Math.max(row.from_user, row.to_user);
-        const key = `${smaller}-${larger}`;
+        const key = `${smaller}-${larger}-${row.currency}`;
 
         if (!netByPair[key]) netByPair[key] = 0;
 
@@ -155,7 +155,9 @@ async function getPairwiseBalancesByGroupId(req, res) {
     for(const [key, netAmount] of Object.entries(netByPair)) {
         if (Math.abs(netAmount) < 0.01) continue; //skip pairs that are fully settled
 
-        const [smallerId, largerId] = key.split("-").map(Number);
+        const [smallerIdStr, largerIdStr, currency] = key.split("-");
+        const smallerId = Number(smallerIdStr);
+        const largerId = Number(largerIdStr);
 
         //if netAmount is positive, the "larger" id person owes the "smaller" id person
         const debtorId = netAmount > 0 ? largerId : smallerId;
@@ -170,6 +172,7 @@ async function getPairwiseBalancesByGroupId(req, res) {
             creditor_id: creditor.id,
             creditor_name: creditor.name,
             amount: Math.abs(netAmount), //always positive
+            currency: currency 
         });
     }
 
