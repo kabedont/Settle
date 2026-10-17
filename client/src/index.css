@@ -1,0 +1,15 @@
+:root {
+    --color-background: #faf7f2;
+    --color-card: #ffffff;
+    --color-primary: #7c9070;
+    --color-accent: #d97756;
+    --color-text: #2b2b2b;
+    --font-heading: 'Fraunces', serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-body);
+}
