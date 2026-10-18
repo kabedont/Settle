@@ -31,16 +31,16 @@ function Login() {
 
     return(
         <>
-            <div className="logo">Settle</div>
+            <h1 className="logo">Settle</h1>
             <form onSubmit={handleSubmit}>
-                <div>Email</div> 
+                <label>Email</label> 
                 <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 
-                <div>Password</div>
+                <label>Password</label>
                 <input
                     type="password"
                     value={password}

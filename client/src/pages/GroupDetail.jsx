@@ -113,8 +113,8 @@ function GroupDetail() {
 
     return(
         <>
-            <div className="group-name">{group.name}</div>
-            <div>{group.creator_name} at {new Date(group.created_at).toLocaleString()}</div>
+            <h1 className="group-name">{group.name}</h1>
+            <div className="caption">{group.creator_name} at {new Date(group.created_at).toLocaleString()}</div>
 
             <div>
                 {myBalance
@@ -134,7 +134,7 @@ function GroupDetail() {
                 </div>
             ))}
 
-            <div>MEMBERS:</div>
+            <h2>MEMBERS:</h2>
             {members.map((member) => (
                 <div key={member.id}>{member.name}</div>
             ))}
@@ -148,7 +148,7 @@ function GroupDetail() {
                 <button type="submit">Add Member</button>
             </form>
             
-            <div>EXPENSES:</div>
+            <h2>EXPENSES:</h2>
             {expenses.map((expense) => (
                 <div key={expense.id}>{expense.description} — {expense.amount} {expense.currency} (paid by {expense.payer_name})</div>
             ))}

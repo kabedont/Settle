@@ -35,8 +35,8 @@ function Home() {
 
     return(
         <>
-            <div className="greeting">Welcome back, {user} !</div>
-            <div>Groups List</div>
+            <h1 className="greeting">Welcome back, {user} !</h1>
+            <h2>Groups List</h2>
             <button type="button" onClick={handleCreate}>Create group</button>
             {groups.map((group) => (
                 <Link key={group.id} to={`/group/${group.id}`}>

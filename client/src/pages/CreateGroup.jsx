@@ -27,7 +27,7 @@ function CreateGroup() {
 
     return(
         <>
-            <div>Create Group</div>
+            <h2>Create Group</h2>
             <form onSubmit={handleSave}>
                 <input
                     type="text"

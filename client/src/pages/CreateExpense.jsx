@@ -53,7 +53,7 @@ function CreateExpense() {
 
     return(
         <>
-            <div className="group-name">{group.name}</div>
+            <h2 className="group-name">{group.name}</h2>
             <form onSubmit={handleCreate}>
                 <div>Description:</div>
                 <input
