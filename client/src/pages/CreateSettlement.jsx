@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 function CreateSettlement() {
     //from_user, to_user, amount, currency
+    const[group, setGroup] = useState("");
     const[loggedInUser, setLoggedInUser] = useState("");
     const[userOwedList, setUserOwedList] = useState([]);
     const[userOwed, setUserOwed] = useState("");
@@ -13,6 +14,16 @@ function CreateSettlement() {
 
 
     useEffect(() => {
+        //fetch group
+        const groupGet = async (e) => {
+            const group = await fetch(`http://localhost:5000/api/groups/${id}`, {
+                credentials: "include",
+            })
+            .then(res => res.json());
+            setGroup(group);
+        }
+        groupGet();
+
         //fetch logged in user, pairwise balances, and filter
         const fetchData = async (e) => {
             
@@ -60,6 +71,7 @@ function CreateSettlement() {
 
     return(
         <>
+            <h2 className="group-name">{group.name}</h2>
             <form onSubmit={handleSubmit}>
 
                 <div>FROM: {loggedInUser.name}</div>
