@@ -13,3 +13,20 @@ body {
     color: var(--color-text);
     font-family: var(--font-body);
 }
+
+h1 {
+    font-family: var(--font-heading);
+    font-size: 2.0rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+}
+
+h2 {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
