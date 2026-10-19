@@ -45,3 +45,21 @@ button:hover {
     cursor: pointer;
     filter: brightness(0.9);
 }
+
+input, select{
+    border: 1px solid #565656;
+    border-radius: 5px;
+    padding: 0.3rem;
+    transition: 0.15s ease;
+}
+
+input:focus, select:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(124, 144, 112, 0.2);
+}
+
+input:-webkit-autofill {
+    box-shadow: 0 0 0 1000px var(--color-card) inset;
+    -webkit-text-fill-color: var(--color-text);
+}
