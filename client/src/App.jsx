@@ -10,15 +10,17 @@ import './App.css';
 
 function AppContent() {
   return(
-    <Routes>
-      <Route path="/" element={<Login/>}/>
-      <Route path="/register" element={<Register/>}/>
-      <Route path="/home" element={<Home/>}/>
-      <Route path="/group/:id" element={<GroupDetail/>}/>
-      <Route path="/group/new" element={<CreateGroup/>}/>
-      <Route path="/group/:id/expense/new" element={<CreateExpense/>}/>
-      <Route path="/group/:id/settle/new" element={<CreateSettlement/>}/>
-    </Routes>
+    <div className='page-container'>
+      <Routes>
+        <Route path="/" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
+        <Route path="/home" element={<Home/>}/>
+        <Route path="/group/:id" element={<GroupDetail/>}/>
+        <Route path="/group/new" element={<CreateGroup/>}/>
+        <Route path="/group/:id/expense/new" element={<CreateExpense/>}/>
+        <Route path="/group/:id/settle/new" element={<CreateSettlement/>}/>
+      </Routes>
+    </div>
   )
 }
 
