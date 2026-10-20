@@ -90,3 +90,7 @@ input:-webkit-autofill {
     color: var(--color-accent);
     font-weight: 700;
 }
+
+.amount-neutral {
+    font-weight: 600;   
+}

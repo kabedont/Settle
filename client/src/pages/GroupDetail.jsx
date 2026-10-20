@@ -135,7 +135,7 @@ function GroupDetail() {
             <div className="card card-highlight">
                 {pairwiseBalance.map((pair) => (
                     <div key={`${pair.debtor_id}-${pair.creditor_id}`}>
-                        {pair.debtor_name} owes {pair.creditor_name} {pair.amount.toFixed(2)} {pair.currency}
+                        {pair.debtor_name} owes {pair.creditor_name} <span className="amount-neutral">{pair.amount.toFixed(2)} {pair.currency}</span>
                     </div>
                 ))}
             </div>
