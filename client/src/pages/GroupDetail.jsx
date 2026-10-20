@@ -121,9 +121,11 @@ function GroupDetail() {
                     {myBalance
                         ? Object.entries(myBalance.balances).map(([currency, amount]) => (
                             <div key={currency}>
-                                {amount >= 0
-                                    ? `YOU ARE OWED ${amount.toFixed(2)} ${currency}`
-                                    : `YOU OWE ${Math.abs(amount).toFixed(2)} ${currency}`}
+                                {amount >= 0 ? (
+                                    <>You are owed <span className="amount-positive">{amount.toFixed(2)} {currency}</span></>
+                                ) : (
+                                    <>You owe <span className="amount-negative">{Math.abs(amount).toFixed(2)} {currency}</span></>
+                                )}
                             </div>
                         ))
                         : "Loading..."}
