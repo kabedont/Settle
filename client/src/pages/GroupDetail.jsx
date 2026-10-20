@@ -116,23 +116,27 @@ function GroupDetail() {
             <h1 className="group-name">{group.name}</h1>
             <div className="caption">{group.creator_name} at {new Date(group.created_at).toLocaleString()}</div>
 
-            <div>
-                {myBalance
-                    ? Object.entries(myBalance.balances).map(([currency, amount]) => (
-                        <div key={currency}>
-                            {amount >= 0
-                                ? `YOU ARE OWED ${amount.toFixed(2)} ${currency}`
-                                : `YOU OWE ${Math.abs(amount).toFixed(2)} ${currency}`}
-                        </div>
-                    ))
-                    : "Loading..."}
-            </div>
-
-            {pairwiseBalance.map((pair) => (
-                <div key={`${pair.debtor_id}-${pair.creditor_id}`}>
-                    {pair.debtor_name} owes {pair.creditor_name} {pair.amount.toFixed(2)} {pair.currency}
+            <div className="card">
+                <div>
+                    {myBalance
+                        ? Object.entries(myBalance.balances).map(([currency, amount]) => (
+                            <div key={currency}>
+                                {amount >= 0
+                                    ? `YOU ARE OWED ${amount.toFixed(2)} ${currency}`
+                                    : `YOU OWE ${Math.abs(amount).toFixed(2)} ${currency}`}
+                            </div>
+                        ))
+                        : "Loading..."}
                 </div>
-            ))}
+            </div>
+            
+            <div className="card">
+                {pairwiseBalance.map((pair) => (
+                    <div key={`${pair.debtor_id}-${pair.creditor_id}`}>
+                        {pair.debtor_name} owes {pair.creditor_name} {pair.amount.toFixed(2)} {pair.currency}
+                    </div>
+                ))}
+            </div>
 
             <div className="card">
                 <h2>Members</h2>

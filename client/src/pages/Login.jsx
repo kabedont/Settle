@@ -32,25 +32,27 @@ function Login() {
     return(
         <>
             <h1 className="logo">Settle</h1>
-            <form onSubmit={handleSubmit}>
-                <label>Email</label> 
-                <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                
-                <label>Password</label>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                
-                <div>Don't have an account? <a href="/register">Register</a>!</div>
+            <div className="card">
+                <form onSubmit={handleSubmit}>
+                    <label>Email</label> 
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    
+                    <div>Don't have an account? <a href="/register">Register</a>!</div>
 
-                <button type="submit">Log in</button>
-            </form>
+                    <button type="submit">Log in</button>
+                </form>
+            </div>
         </>
     )
 }

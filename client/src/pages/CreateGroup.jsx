@@ -27,15 +27,17 @@ function CreateGroup() {
 
     return(
         <>
-            <h2>Create Group</h2>
-            <form onSubmit={handleSave}>
-                <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <button type="submit">Save</button>
-            </form>
+            <div className="card">
+                <h2>Create Group</h2>
+                <form onSubmit={handleSave}>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <button type="submit">Save</button>
+                </form>
+            </div>
         </>
     )   
 }

@@ -71,52 +71,54 @@ function CreateSettlement() {
 
     return(
         <>
-            <h2 className="group-name">{group.name}</h2>
-            <form onSubmit={handleSubmit}>
+            <h1 className="group-name">{group.name}</h1>
+            <div className="card">
+                <form onSubmit={handleSubmit}>
 
-                <div>FROM: {loggedInUser.name}</div>
+                    <div>FROM: {loggedInUser.name}</div>
 
-                <div>TO: </div>
-                <select
-                    value={userOwed}
-                    onChange={(e) => setUserOwed(e.target.value)}
-                >
-                    <option value="">Select who to pay</option>
-                    {userOwedList.map((entry) => (
-                        <option key={entry.creditor_id} value={entry.creditor_id}>
-                            {entry.creditor_name}
-                        </option>
-                    ))}
+                    <div>TO: </div>
+                    <select
+                        value={userOwed}
+                        onChange={(e) => setUserOwed(e.target.value)}
+                    >
+                        <option value="">Select who to pay</option>
+                        {userOwedList.map((entry) => (
+                            <option key={entry.creditor_id} value={entry.creditor_id}>
+                                {entry.creditor_name}
+                            </option>
+                        ))}
 
-                </select>
+                    </select>
 
-                <div>AMOUNT: </div>
-                <input
-                    type="number"
-                    value={amountOwed}
-                    onChange={(e) => setAmountOwed(e.target.value)}
-                />
+                    <div>AMOUNT: </div>
+                    <input
+                        type="number"
+                        value={amountOwed}
+                        onChange={(e) => setAmountOwed(e.target.value)}
+                    />
 
-                <div>CURRENCY: </div>
-                <select
-                    value={currency}
-                    onChange={(e) => setCurrency(e.target.value)}
-                    required
-                >
-                    <option value="">Select currency</option>
-                    <option value="CNY">CNY - Chinese Yuan</option>
-                    <option value="USD">USD - US Dollar</option>
-                    <option value="SGD">SGD - Singapore Dollar</option>
-                    <option value="IDR">IDR - Indonesian Rupiah</option>
-                    <option value="EUR">EUR - Euro</option>
-                    <option value="MYR">MYR - Malaysian Ringgit</option>
-                    <option value="KRW">KRW - Korean Won</option>
-                    <option value="JPY">JPY - Japanese Yen</option>
-                    <option value="GBP">GBP - British Pound</option>
-                </select>
+                    <div>CURRENCY: </div>
+                    <select
+                        value={currency}
+                        onChange={(e) => setCurrency(e.target.value)}
+                        required
+                    >
+                        <option value="">Select currency</option>
+                        <option value="CNY">CNY - Chinese Yuan</option>
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="SGD">SGD - Singapore Dollar</option>
+                        <option value="IDR">IDR - Indonesian Rupiah</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="MYR">MYR - Malaysian Ringgit</option>
+                        <option value="KRW">KRW - Korean Won</option>
+                        <option value="JPY">JPY - Japanese Yen</option>
+                        <option value="GBP">GBP - British Pound</option>
+                    </select>
 
-                <button type="submit">Settle Up</button>
-            </form>
+                    <button type="submit">Settle Up</button>
+                </form>
+            </div>
         </>
     )
 }

@@ -36,15 +36,17 @@ function Home() {
     return(
         <>
             <h1 className="greeting">Welcome back, {user} !</h1>
-            <h2>Groups List</h2>
-            <button type="button" onClick={handleCreate}>Create group</button>
-            {groups.map((group) => (
-                <Link key={group.id} to={`/group/${group.id}`}>
-                    <div className="groups-list">
-                        {group.name}
-                    </div>
-                </Link>
-            ))}
+            <div className="card">
+                <h2>Your Groups</h2>
+                <button type="button" onClick={handleCreate}>Create group</button>
+                {groups.map((group) => (
+                    <Link key={group.id} to={`/group/${group.id}`}>
+                        <div className="groups-list">
+                            {group.name}
+                        </div>
+                    </Link>
+                ))}
+            </div>
         </>
     )
 }
