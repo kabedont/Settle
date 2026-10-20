@@ -116,7 +116,7 @@ function GroupDetail() {
             <h1 className="group-name">{group.name}</h1>
             <div className="caption">{group.creator_name} at {new Date(group.created_at).toLocaleString()}</div>
 
-            <div className="card">
+            <div className="card card-highlight">
                 <div>
                     {myBalance
                         ? Object.entries(myBalance.balances).map(([currency, amount]) => (
@@ -130,7 +130,7 @@ function GroupDetail() {
                 </div>
             </div>
             
-            <div className="card">
+            <div className="card card-highlight">
                 {pairwiseBalance.map((pair) => (
                     <div key={`${pair.debtor_id}-${pair.creditor_id}`}>
                         {pair.debtor_name} owes {pair.creditor_name} {pair.amount.toFixed(2)} {pair.currency}

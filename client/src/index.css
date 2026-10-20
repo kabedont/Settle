@@ -76,3 +76,7 @@ input:-webkit-autofill {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     margin-bottom: 1.5rem;
 }
+
+.card-highlight {
+    border-left: 4px solid var(--color-primary);
+}
