@@ -134,27 +134,31 @@ function GroupDetail() {
                 </div>
             ))}
 
-            <h2>Members</h2>
-            {members.map((member) => (
-                <div key={member.id}>{member.name}</div>
-            ))}
+            <div className="card">
+                <h2>Members</h2>
+                {members.map((member) => (
+                    <div key={member.id}>{member.name}</div>
+                ))}
 
-            <form onSubmit={handleAdd}>
-                <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <button type="submit">Add Member</button>
-            </form>
+                <form onSubmit={handleAdd}>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <button type="submit">Add Member</button>
+                </form>
+            </div>
             
-            <h2>Expenses</h2>
-            {expenses.map((expense) => (
-                <div key={expense.id}>{expense.description} — {expense.amount} {expense.currency} (paid by {expense.payer_name})</div>
-            ))}
+            <div className="card">
+                <h2>Expenses</h2>
+                {expenses.map((expense) => (
+                    <div key={expense.id}>{expense.description} — {expense.amount} {expense.currency} (paid by {expense.payer_name})</div>
+                ))}
 
-            <button type="button" onClick={handleCreate}>Add Expense</button>
-            <button type="button" onClick={handleSettle}>Settle Up</button>
+                <button type="button" onClick={handleCreate}>Add Expense</button>
+                <button type="button" onClick={handleSettle}>Settle Up</button>
+            </div>
         </>
     )
 }

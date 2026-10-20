@@ -68,3 +68,11 @@ input:-webkit-autofill {
     box-shadow: 0 0 0 1000px var(--color-card) inset;
     -webkit-text-fill-color: var(--color-text);
 }
+
+.card {
+    background-color: var(--color-card);
+    padding: 1rem 1.25rem;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 1.5rem;
+}
