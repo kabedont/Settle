@@ -41,7 +41,7 @@ function Home() {
                 <button type="button" onClick={handleCreate}>Create group</button>
                 {groups.map((group) => (
                     <Link key={group.id} to={`/group/${group.id}`}>
-                        <div className="groups-list">
+                        <div className="list-item">
                             {group.name}
                         </div>
                     </Link>

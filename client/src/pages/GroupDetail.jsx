@@ -143,7 +143,7 @@ function GroupDetail() {
             <div className="card">
                 <h2>Members</h2>
                 {members.map((member) => (
-                    <div key={member.id}>{member.name}</div>
+                    <div key={member.id} className="list-item"> {member.name}</div>
                 ))}
 
                 <form onSubmit={handleAdd}>
@@ -159,7 +159,7 @@ function GroupDetail() {
             <div className="card">
                 <h2>Expenses</h2>
                 {expenses.map((expense) => (
-                    <div key={expense.id}>{expense.description} — {expense.amount} {expense.currency} (paid by {expense.payer_name})</div>
+                    <div key={expense.id} className="list-item">{expense.description} — {expense.amount} {expense.currency} (paid by {expense.payer_name})</div>
                 ))}
 
                 <button type="button" onClick={handleCreate}>Add Expense</button>

@@ -94,3 +94,7 @@ input:-webkit-autofill {
 .amount-neutral {
     font-weight: 600;   
 }
+
+.list-item {
+    margin-bottom: 0.5rem;
+}
