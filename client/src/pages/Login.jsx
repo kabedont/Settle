@@ -52,7 +52,7 @@ function Login() {
                         />
                     </div>
                     
-                    <div className='field'>Don't have an account? <a href="/register">Register</a>!</div>
+                    <div className='list-item'>Don't have an account? <a href="/register">Register</a>!</div>
 
                     <button type="submit">Log in</button>
                 </form>
