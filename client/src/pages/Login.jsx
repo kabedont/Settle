@@ -34,21 +34,25 @@ function Login() {
             <h1 className="logo">Settle</h1>
             <div className="card">
                 <form onSubmit={handleSubmit}>
-                    <label>Email</label> 
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
+                    <div className='field'>
+                        <label>Email</label> 
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
                     
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                    <div className='field'>
+                        <label>Password</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
                     
-                    <div>Don't have an account? <a href="/register">Register</a>!</div>
+                    <div className='field'>Don't have an account? <a href="/register">Register</a>!</div>
 
                     <button type="submit">Log in</button>
                 </form>

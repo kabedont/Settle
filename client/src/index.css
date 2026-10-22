@@ -98,3 +98,7 @@ input:-webkit-autofill {
 .list-item {
     margin-bottom: 0.5rem;
 }
+
+.field {
+    margin-bottom: 1rem;
+}

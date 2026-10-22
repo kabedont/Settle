@@ -114,7 +114,7 @@ function GroupDetail() {
     return(
         <>
             <h1 className="group-name">{group.name}</h1>
-            <div className="caption">{group.creator_name} at {new Date(group.created_at).toLocaleString()}</div>
+            <div className="caption field">{group.creator_name} at {new Date(group.created_at).toLocaleString()}</div>
 
             <div className="card card-highlight">
                 <div>

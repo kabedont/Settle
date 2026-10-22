@@ -75,46 +75,51 @@ function CreateSettlement() {
             <div className="card">
                 <form onSubmit={handleSubmit}>
 
-                    <div>FROM: {loggedInUser.name}</div>
+                    <div className='field'>FROM: {loggedInUser.name}</div>
 
-                    <div>TO: </div>
-                    <select
-                        value={userOwed}
-                        onChange={(e) => setUserOwed(e.target.value)}
-                    >
-                        <option value="">Select who to pay</option>
-                        {userOwedList.map((entry) => (
-                            <option key={entry.creditor_id} value={entry.creditor_id}>
-                                {entry.creditor_name}
-                            </option>
-                        ))}
+                    <div className='field'>
+                        <div>TO: </div>
+                        <select
+                            value={userOwed}
+                            onChange={(e) => setUserOwed(e.target.value)}
+                        >
+                            <option value="">Select who to pay</option>
+                            {userOwedList.map((entry) => (
+                                <option key={entry.creditor_id} value={entry.creditor_id}>
+                                    {entry.creditor_name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
-                    </select>
+                    <div className='field'>
+                        <div>AMOUNT: </div>
+                        <input
+                            type="number"
+                            value={amountOwed}
+                            onChange={(e) => setAmountOwed(e.target.value)}
+                        />
+                    </div>
 
-                    <div>AMOUNT: </div>
-                    <input
-                        type="number"
-                        value={amountOwed}
-                        onChange={(e) => setAmountOwed(e.target.value)}
-                    />
-
-                    <div>CURRENCY: </div>
-                    <select
-                        value={currency}
-                        onChange={(e) => setCurrency(e.target.value)}
-                        required
-                    >
-                        <option value="">Select currency</option>
-                        <option value="CNY">CNY - Chinese Yuan</option>
-                        <option value="USD">USD - US Dollar</option>
-                        <option value="SGD">SGD - Singapore Dollar</option>
-                        <option value="IDR">IDR - Indonesian Rupiah</option>
-                        <option value="EUR">EUR - Euro</option>
-                        <option value="MYR">MYR - Malaysian Ringgit</option>
-                        <option value="KRW">KRW - Korean Won</option>
-                        <option value="JPY">JPY - Japanese Yen</option>
-                        <option value="GBP">GBP - British Pound</option>
-                    </select>
+                    <div className='field'>
+                        <div>CURRENCY: </div>
+                        <select
+                            value={currency}
+                            onChange={(e) => setCurrency(e.target.value)}
+                            required
+                        >
+                            <option value="">Select currency</option>
+                            <option value="CNY">CNY - Chinese Yuan</option>
+                            <option value="USD">USD - US Dollar</option>
+                            <option value="SGD">SGD - Singapore Dollar</option>
+                            <option value="IDR">IDR - Indonesian Rupiah</option>
+                            <option value="EUR">EUR - Euro</option>
+                            <option value="MYR">MYR - Malaysian Ringgit</option>
+                            <option value="KRW">KRW - Korean Won</option>
+                            <option value="JPY">JPY - Japanese Yen</option>
+                            <option value="GBP">GBP - British Pound</option>
+                        </select>
+                    </div>
 
                     <button type="submit">Settle Up</button>
                 </form>
