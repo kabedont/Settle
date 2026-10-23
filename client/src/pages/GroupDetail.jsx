@@ -116,7 +116,7 @@ function GroupDetail() {
             <h1 className="group-name">{group.name}</h1>
             <div className="caption field">{group.creator_name} at {new Date(group.created_at).toLocaleString()}</div>
 
-            <div className="card card-highlight">
+            <div className="card card-highlight flex-between">
                 <div>
                     {myBalance
                         ? Object.entries(myBalance.balances).map(([currency, amount]) => (
@@ -130,7 +130,9 @@ function GroupDetail() {
                         ))
                         : "Loading..."}
                 </div>
+                <button type="button" onClick={handleSettle}>Settle Up</button>
             </div>
+
             
             <div className="card card-highlight">
                 {pairwiseBalance.map((pair) => (
@@ -163,7 +165,6 @@ function GroupDetail() {
                 ))}
 
                     <button type="button" onClick={handleCreate}>Add Expense</button>
-                    <button type="button" onClick={handleSettle}>Settle Up</button>
             </div>
         </>
     )

@@ -37,7 +37,7 @@ function Home() {
         <>
             <h1 className="greeting">Welcome back, {user} !</h1>
             <div className="card">
-                <div className='section-header'>
+                <div className='flex-between'>
                     <h2>Your Groups</h2>
                     <button type="button" onClick={handleCreate}>Create group</button>
                 </div>

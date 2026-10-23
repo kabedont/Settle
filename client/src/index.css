@@ -106,7 +106,7 @@ input:-webkit-autofill {
 }
 
 /*same row*/
-.section-header {
+.flex-between {
     display: flex;
     justify-content: space-between;
     align-items: center;
