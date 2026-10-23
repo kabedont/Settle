@@ -105,8 +105,15 @@ input:-webkit-autofill {
     margin-bottom: 1rem;
 }
 
+/*same row*/
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+/*adds horizontal space*/
+.input-button {
+    display: flex;
+    gap: 0.75rem;
 }

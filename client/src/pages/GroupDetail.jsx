@@ -146,7 +146,7 @@ function GroupDetail() {
                     <div key={member.id} className="list-item"> {member.name}</div>
                 ))}
 
-                <form onSubmit={handleAdd}>
+                <form className="input-button" onSubmit={handleAdd}>
                     <input
                         type="email"
                         value={email}
@@ -162,8 +162,8 @@ function GroupDetail() {
                     <div key={expense.id} className="list-item">{expense.description} — {expense.amount} {expense.currency} (paid by {expense.payer_name})</div>
                 ))}
 
-                <button type="button" onClick={handleCreate}>Add Expense</button>
-                <button type="button" onClick={handleSettle}>Settle Up</button>
+                    <button type="button" onClick={handleCreate}>Add Expense</button>
+                    <button type="button" onClick={handleSettle}>Settle Up</button>
             </div>
         </>
     )
