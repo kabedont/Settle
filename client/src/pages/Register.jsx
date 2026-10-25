@@ -5,6 +5,7 @@ function Register() {
     const[name, setName] = useState("");
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
+    const[errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -23,10 +24,8 @@ function Register() {
             console.log(response.status);
             navigate('/home');
         } else {
-            console.log("login failed.");
-            console.log("status:", response.status);
-            const data = await response.text();
-            console.log("server says:", data); 
+            const data = await response.json();
+            setErrorMessage(data.message);
         }
     }
 
@@ -38,6 +37,7 @@ function Register() {
                     <div className='field'>
                         <label>Name</label>
                         <input
+                            required
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
@@ -47,6 +47,7 @@ function Register() {
                     <div className='field'>
                         <label>Email</label>
                         <input
+                            required
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -56,12 +57,14 @@ function Register() {
                     <div className='field'>
                         <label>Password</label>
                         <input
+                            required
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
 
+                    <div>{errorMessage}</div>
                     <button type="submit">Register</button>
                 </form>
             </div>
