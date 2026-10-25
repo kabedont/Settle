@@ -36,6 +36,7 @@ function Login() {
                     <div className='field'>
                         <label>Email</label> 
                         <input
+                            required
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -45,6 +46,7 @@ function Login() {
                     <div className='field'>
                         <label>Password</label>
                         <input
+                            required
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
