@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function Login() {
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
+    const[errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -22,10 +23,8 @@ function Login() {
             console.log(response.status);
             navigate('/home');
         } else {
-            console.log("login failed.");
-            console.log("status:", response.status);
-            const data = await response.text();
-            console.log("server says:", data);
+            const data = await response.json();
+            setErrorMessage(data.message);
         }
     }
 
@@ -54,6 +53,7 @@ function Login() {
                     
                     <div className='list-item'>Don't have an account? <a href="/register">Register</a>!</div>
 
+                    <div>{errorMessage}</div>
                     <button type="submit">Log in</button>
                 </form>
             </div>
