@@ -9,12 +9,16 @@ async function registerPost(req, res){
 
         req.logIn({ id: user_id }, (err) => {
             if (err) {
-                return res.status(500).json({ message: "login after registration failed" });
+                return res.status(500).json({ message: "Login after registration failed" });
             }
-            return res.status(201).json({ message: "registered", user: { id: user_id, email, name } });
+            return res.status(201).json({ message: "Registered", user: { id: user_id, email, name } });
         });
     } catch (err) {
-        res.status(400).json({message: "registration failed", error: err.message});
+        if (err.code === "23505") {
+            res.status(400).json({message: "Email already registered"});
+        } else {
+            res.status(400).json({message: "Registration failed", error: err.message});
+        }
     }
 };
 
