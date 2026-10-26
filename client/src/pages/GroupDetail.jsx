@@ -5,6 +5,7 @@ function GroupDetail() {
     const[group, setGroup] = useState("");
     const[email, setEmail] = useState("");
     const[loggedInUser, setLoggedInUser] = useState("");
+    const[errorMessage, setErrorMessage] = useState("");
     const[members, setMembers] = useState([]);
     const[expenses, setExpenses] = useState([]);
     const[balance, setBalance] = useState([]);
@@ -104,7 +105,7 @@ function GroupDetail() {
             membersGet();
         } else {
             const data = await response.json();
-            console.log(data.message);
+            setErrorMessage(data.message);
         }
     }
 
@@ -155,6 +156,7 @@ function GroupDetail() {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <button type="submit">Add Member</button>
+                    <div>{errorMessage}</div>
                 </form>
             </div>
             
