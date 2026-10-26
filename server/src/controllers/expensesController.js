@@ -5,7 +5,10 @@ async function createExpenses(req, res) {
     const group_id = req.params.id;
     const {amount, currency, description} = req.body;
     if (amount === undefined || amount === "" || description.length === 0 || currency.length === 0) {
-        return res.status(400).json({message: "cannot leave field empty"});
+        return res.status(400).json({message: "Cannot leave field empty"});
+    }
+    if (amount <= 0) {
+        return res.status(400).json({message: "Amount must be greater than 0"})
     }
     const expense_id = await db.insertExpenses(group_id, paid_by, amount, currency, description);
     const members = await db.getMembersByGroupId(group_id);

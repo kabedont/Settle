@@ -7,6 +7,7 @@ function CreateExpense() {
     const[amount, setAmount] = useState("");
     const[currency, setCurrency] = useState("");
     const[paidBy, setPaidBy] = useState("");
+    const[errorMessage, setErrorMessage] = useState("");
     const {id} = useParams();
     const navigate = useNavigate();
 
@@ -48,6 +49,9 @@ function CreateExpense() {
         if (response.ok) {
             console.log(response.status);
             navigate(`/group/${id}`);
+        } else {
+            const data = await response.json();
+            setErrorMessage(data.message);
         }
     }
 
@@ -97,7 +101,8 @@ function CreateExpense() {
                     </div>
 
                     <div className='field'>Paid by: {paidBy.name}</div>
-
+                    
+                    <div>{errorMessage}</div>
                     <button type="submit">Create Expense</button>
                 </form>
             </div>
