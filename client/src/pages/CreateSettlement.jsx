@@ -9,6 +9,7 @@ function CreateSettlement() {
     const[userOwed, setUserOwed] = useState("");
     const[amountOwed, setAmountOwed] = useState("");
     const[currency, setCurrency] = useState("");
+    const[errorMessage, setErrorMessage] = useState("");
     const {id} = useParams();
     const navigate = useNavigate();
 
@@ -65,7 +66,7 @@ function CreateSettlement() {
             navigate(`/group/${id}`);
         } else {
             const data = await response.json();
-            console.log(data.message);
+            setErrorMessage(data.message);
         }
     }
 
@@ -80,6 +81,7 @@ function CreateSettlement() {
                     <div className='field'>
                         <div>TO: </div>
                         <select
+                            required
                             value={userOwed}
                             onChange={(e) => setUserOwed(e.target.value)}
                         >
@@ -95,6 +97,7 @@ function CreateSettlement() {
                     <div className='field'>
                         <div>AMOUNT: </div>
                         <input
+                            required
                             type="number"
                             value={amountOwed}
                             onChange={(e) => setAmountOwed(e.target.value)}
@@ -120,7 +123,8 @@ function CreateSettlement() {
                             <option value="GBP">GBP - British Pound</option>
                         </select>
                     </div>
-
+                    
+                    <div>{errorMessage}</div>
                     <button type="submit">Settle Up</button>
                 </form>
             </div>
