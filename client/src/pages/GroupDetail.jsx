@@ -156,7 +156,7 @@ function GroupDetail() {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <button type="submit">Add Member</button>
-                    <div>{errorMessage}</div>
+                    <div className="error-message">{errorMessage}</div>
                 </form>
             </div>
             

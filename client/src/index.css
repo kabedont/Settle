@@ -117,3 +117,10 @@ input:-webkit-autofill {
     display: flex;
     gap: 0.75rem;
 }
+
+.error-message {
+    color: var(--color-accent);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}

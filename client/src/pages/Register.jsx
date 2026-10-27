@@ -64,7 +64,7 @@ function Register() {
                         />
                     </div>
 
-                    <div>{errorMessage}</div>
+                    <div className="error-message">{errorMessage}</div>
                     <button type="submit">Register</button>
                 </form>
             </div>

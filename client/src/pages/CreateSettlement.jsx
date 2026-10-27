@@ -124,7 +124,7 @@ function CreateSettlement() {
                         </select>
                     </div>
                     
-                    <div>{errorMessage}</div>
+                    <div className="error-message">{errorMessage}</div>
                     <button type="submit">Settle Up</button>
                 </form>
             </div>

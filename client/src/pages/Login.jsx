@@ -55,7 +55,7 @@ function Login() {
                     
                     <div className='list-item'>Don't have an account? <a href="/register">Register</a>!</div>
 
-                    <div>{errorMessage}</div>
+                    <div className="error-message">{errorMessage}</div>
                     <button type="submit">Log in</button>
                 </form>
             </div>

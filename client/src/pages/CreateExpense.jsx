@@ -102,7 +102,7 @@ function CreateExpense() {
 
                     <div className='field'>Paid by: {paidBy.name}</div>
                     
-                    <div>{errorMessage}</div>
+                    <div className="error-message">{errorMessage}</div>
                     <button type="submit">Create Expense</button>
                 </form>
             </div>
