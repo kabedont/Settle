@@ -29,7 +29,7 @@ function CreateGroup() {
         <>
             <div className="card">
                 <h2>Create Group</h2>
-                <form onSubmit={handleSave}>
+                <form className="input-button" onSubmit={handleSave}>
                     <input
                         type="text"
                         value={name}
