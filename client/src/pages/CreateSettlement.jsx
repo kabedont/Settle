@@ -83,7 +83,16 @@ function CreateSettlement() {
                         <select
                             required
                             value={userOwed}
-                            onChange={(e) => setUserOwed(e.target.value)}
+                            onChange={(e) => {
+                                const selectedId = e.target.value;
+                                setUserOwed(selectedId);
+
+                                const entry = userOwedList.find((o) => o.creditor_id === Number(selectedId));
+                                if (entry) {
+                                    setAmountOwed(entry.amount);
+                                    setCurrency(entry.currency);
+                                }
+                            }}
                         >
                             <option value="">Select who to pay</option>
                             {userOwedList.map((entry) => (
