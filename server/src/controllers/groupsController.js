@@ -86,15 +86,17 @@ async function getBalancesByGroupId (req, res) {
         const balancesByCurrency = {};
         for(const currency of currencies) {
             const paidEntry = paidEntries.find((p) => p.currency === currency);
-            const owedEntry = owedEntries.find((o) => o.currency === currency);
-            const paidOutEntry = paidOutEntries.find((p) => p.currency === currency);
-            const receivedBackEntry = receivedBackEntries.find((r) => r.currency === currency);
-
+            const owedEntry = owedEntries.find((o) => o.currency === currency)
+            const paidOut = paidOutEntries
+                .filter((p) => p.currency === currency)
+                .reduce((sum, p) => sum + Number(p.amount), 0);
+            const receivedBack = receivedBackEntries
+                .filter((r) => r.currency === currency)
+                .reduce((sum, r) => sum + Number(r.amount), 0);
+                
             //wrap in Number() since SUM() comes back as a string from postgres
             const paid = paidEntry ? Number(paidEntry.total_paid) : 0; //if not found, default to 0
             const owed = owedEntry ? Number(owedEntry.total_owed) : 0;
-            const paidOut = paidOutEntry ? Number(paidOutEntry.amount) : 0;
-            const receivedBack = receivedBackEntry ? Number(receivedBackEntry.amount) : 0;
 
             balancesByCurrency[currency] = (paid + paidOut) - (owed + receivedBack); //positive = owed money in this currency, negative: owes
             
