@@ -37,7 +37,7 @@ async function getExpensesByGroupId(req, res) {
 }
 
 async function deleteExpense(req, res) {
-    const id = req.params.id;
+    const id = req.params.expenseId;
     await db.deleteExpense(id);
     res.json({message: "expense deleted"});
 }

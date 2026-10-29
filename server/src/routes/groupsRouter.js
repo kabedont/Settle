@@ -11,6 +11,7 @@ groupsRouter.get("/:id", isAuthenticated, groupsController.getOneGroup);
 groupsRouter.post("/:id/members", isAuthenticated, groupsController.addMember);
 groupsRouter.get("/:id/members", isAuthenticated, groupsController.getMember);
 groupsRouter.delete("/:id", isAuthenticated, groupsController.deleteGroup);
+groupsRouter.delete("/:id/expenses/:expenseId", isAuthenticated, expensesController.deleteExpense);
 groupsRouter.post("/:id/expenses", isAuthenticated, expensesController.createExpenses);
 groupsRouter.get("/:id/expenses", isAuthenticated, expensesController.getExpensesByGroupId);
 groupsRouter.get("/:id/balances", isAuthenticated, groupsController.getBalancesByGroupId);

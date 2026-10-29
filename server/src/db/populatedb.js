@@ -17,14 +17,14 @@ CREATE TABLE IF NOT EXISTS groups (
 );
 
 CREATE TABLE IF NOT EXISTS members (
-    group_id INTEGER REFERENCES groups(id),
-    user_id INTEGER REFERENCES users(id),
+    group_id INTEGER REFERENCES groups(id) ON DELETE CASCADE,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
     UNIQUE (group_id, user_id)
 );
 
 CREATE TABLE IF NOT EXISTS expenses (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    group_id INTEGER REFERENCES groups(id),
+    group_id INTEGER REFERENCES groups(id) ON DELETE CASCADE,
     paid_by INTEGER REFERENCES users(id), 
     amount DECIMAL,
     currency VARCHAR(30),
@@ -33,14 +33,14 @@ CREATE TABLE IF NOT EXISTS expenses (
 );
 
 CREATE TABLE IF NOT EXISTS expense_splits (
-    expenses_id INTEGER REFERENCES expenses(id),
+    expenses_id INTEGER REFERENCES expenses(id) ON DELETE CASCADE,
     user_id INTEGER REFERENCES users(id),
     amount_owed DECIMAL
 );
 
 CREATE TABLE IF NOT EXISTS settlements (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    group_id INTEGER REFERENCES groups(id),
+    group_id INTEGER REFERENCES groups(id) ON DELETE CASCADE,
     from_user INTEGER REFERENCES users(id), 
     to_user INTEGER REFERENCES users(id), 
     amount DECIMAL,
