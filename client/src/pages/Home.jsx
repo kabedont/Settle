@@ -5,6 +5,15 @@ function Home() {
     const[user, setUser] = useState("");
     const[groups, setGroups] = useState([]);
     const navigate = useNavigate();
+
+    //fetch data for groups list
+    const groupsGet = async (e) => {
+        const list = await fetch("http://localhost:5000/api/groups", {
+            credentials: "include",
+        })
+        .then(res => res.json());
+        setGroups(list);
+    }
     
     useEffect(() => {
         //fetch user's name
@@ -15,22 +24,28 @@ function Home() {
             .then(res => res.json());
             setUser(data.name);
         }
-        nameGet()
+        nameGet();
 
-        //fetch data for groups list
-        const groupsGet = async (e) => {
-            const list = await fetch("http://localhost:5000/api/groups", {
-                credentials: "include",
-            })
-            .then(res => res.json());
-            setGroups(list);
-        }
+        //fetch groups list
         groupsGet();
+
     }, []); //fetch data when the page loads
 
     //create group button
     const handleCreate = (e) => {
         navigate('/group/new');
+    }
+
+    //delete group button
+    const handleDelete = async (id) => {
+        const response = await fetch(`http://localhost:5000/api/groups/${id}`, {
+            method: "DELETE",
+            credentials: "include",
+        })
+        
+        if(response.ok){
+            groupsGet();
+        }
     }
 
     return(
@@ -41,13 +56,18 @@ function Home() {
                     <h2>Your Groups</h2>
                     <button type="button" onClick={handleCreate}>Create group</button>
                 </div>
-                {groups.map((group) => (
-                    <Link key={group.id} to={`/group/${group.id}`}>
+                
+            {groups.map((group) => (
+                <div key={group.id} className='group-row'>
+                    <Link to={`/group/${group.id}`}>
                         <div className="list-item">
                             {group.name}
                         </div>
                     </Link>
-                ))}
+                <button className='delete-btn' type="button" onClick={(e) => handleDelete(group.id)}>🗑️</button>
+                </div>
+            ))}
+                
             </div>
         </>
     )
