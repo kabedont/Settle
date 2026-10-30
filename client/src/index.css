@@ -124,3 +124,13 @@ input:-webkit-autofill {
     display: flex;
     align-items: center;
 }
+
+.delete-btn {
+    background-color: transparent;
+    opacity: 0;
+    transition: 0.15s ease;
+}
+
+.group-row:hover .delete-btn {
+    opacity: 1;
+}

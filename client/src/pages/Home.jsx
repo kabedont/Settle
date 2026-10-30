@@ -58,7 +58,7 @@ function Home() {
                 </div>
                 
             {groups.map((group) => (
-                <div key={group.id} className='group-row'>
+                <div key={group.id} className='flex-between group-row'>
                     <Link to={`/group/${group.id}`}>
                         <div className="list-item">
                             {group.name}
