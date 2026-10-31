@@ -21,6 +21,33 @@ function GroupDetail() {
         .then(res => res.json());
         setMembers(list);
     }
+
+    //fetch expenses
+    const expensesGet = async (e) => {
+        const list = await fetch(`http://localhost:5000/api/groups/${id}/expenses`, {
+            credentials: "include",
+        })
+        .then(res => res.json());
+        setExpenses(list);
+    }
+
+    //fetch pairwise balance
+    const pairwiseBalanceGet = async (e) => {
+        const data = await fetch(`http://localhost:5000/api/groups/${id}/pairwise-balances`, {
+            credentials: "include",
+        })
+        .then(res => res.json());
+        setPairwiseBalance(data);
+    }
+
+    //fetch balance
+    const balanceGet = async (e) => {
+        const data = await fetch(`http://localhost:5000/api/groups/${id}/balances`, {
+            credentials: "include",
+        })
+        .then(res => res.json());
+        setBalance(data);
+    }
     
     useEffect(() => {
         //fetch group
@@ -35,15 +62,8 @@ function GroupDetail() {
 
         //fetch members
         membersGet();
-
+        
         //fetch expenses
-        const expensesGet = async (e) => {
-            const list = await fetch(`http://localhost:5000/api/groups/${id}/expenses`, {
-                credentials: "include",
-            })
-            .then(res => res.json());
-            setExpenses(list);
-        }
         expensesGet();
 
         //fetch logged in user
@@ -57,23 +77,9 @@ function GroupDetail() {
         userGet();
 
         //fetch balance
-        const balanceGet = async (e) => {
-            const data = await fetch(`http://localhost:5000/api/groups/${id}/balances`, {
-                credentials: "include",
-            })
-            .then(res => res.json());
-            setBalance(data);
-        }
         balanceGet();
 
         //fetch pairwise balance
-        const pairwiseBalanceGet = async (e) => {
-            const data = await fetch(`http://localhost:5000/api/groups/${id}/pairwise-balances`, {
-                credentials: "include",
-            })
-            .then(res => res.json());
-            setPairwiseBalance(data);
-        }
         pairwiseBalanceGet();
 
     }, []);
@@ -106,6 +112,19 @@ function GroupDetail() {
         } else {
             const data = await response.json();
             setErrorMessage(data.message);
+        }
+    }
+
+    //delete expense button
+    const handleDelete = async (expenseId) => {
+        const response = await fetch(`http://localhost:5000/api/groups/${id}/expenses/${expenseId}`, {
+            method: "DELETE",
+            credentials: "include",
+        })
+        if(response.ok) {
+            expensesGet();
+            balanceGet();
+            pairwiseBalanceGet();
         }
     }
 
@@ -163,10 +182,12 @@ function GroupDetail() {
             <div className="card">
                 <h2>Expenses</h2>
                 {expenses.map((expense) => (
-                    <div key={expense.id} className="list-item">{expense.description} — {expense.amount} {expense.currency} (paid by {expense.payer_name})</div>
+                    <div key={expense.expenseId} className='flex-between group-row'>
+                        <div className="list-item">{expense.description} — {expense.amount} {expense.currency} (paid by {expense.payer_name})</div>
+                        <button className="delete-btn" type="button" onClick={(e) => handleDelete(expense.id)}>🗑️</button>
+                    </div>
                 ))}
-
-                    <button type="button" onClick={handleCreate}>Add Expense</button>
+                <button type="button" onClick={handleCreate}>Add Expense</button>
             </div>
         </>
     )
