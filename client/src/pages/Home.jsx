@@ -38,12 +38,18 @@ function Home() {
 
     //delete group button
     const handleDelete = async (id) => {
+        const reconfirm = window.confirm("Delete this group? All its members, expenses, and settlements will be permanently removed. This can't be undone.");
+
+        if(!reconfirm){
+            return;
+        }
+
         const response = await fetch(`http://localhost:5000/api/groups/${id}`, {
             method: "DELETE",
             credentials: "include",
         })
-        
-        if(response.ok){
+
+        if(reconfirm && response.ok){
             groupsGet();
         }
     }
