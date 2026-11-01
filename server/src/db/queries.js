@@ -164,6 +164,15 @@ async function getSettlementsByGroupId (group_id) {
     return rows;
 }
 
+//MEMBERS ONLY (FOR GROUP DELETION)
+async function isMember(group_id, user_id) {
+    const {rows} = await pool.query (
+        "SELECT * FROM members WHERE group_id = $1 AND user_id = $2", 
+        [group_id, user_id]
+    );
+    return rows;
+}
+
 
 module.exports = {
     signUpInformation, 
@@ -186,5 +195,6 @@ module.exports = {
     getTotalPaidByGroupId,
     getTotalOwedByGroupId,
     getRawDebtsByGroupId,
-    getSettlementsByGroupId
+    getSettlementsByGroupId,
+    isMember
 };

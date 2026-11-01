@@ -1,7 +1,7 @@
 const {Router} = require("express");
 const expensesRouter = Router();
 const expensesController = require("../controllers/expensesController");
-const isAuthenticated = require("../middleware/auth");
+const {isAuthenticated} = require("../middleware/auth");
 
 expensesRouter.post("/", isAuthenticated, expensesController.createExpenses);
 expensesRouter.get("/", isAuthenticated, expensesController.getAllExpenses);
