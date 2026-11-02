@@ -37,9 +37,18 @@ async function getExpensesByGroupId(req, res) {
 }
 
 async function deleteExpense(req, res) {
-    const id = req.params.expenseId;
-    await db.deleteExpense(id);
-    res.json({message: "expense deleted"});
+    try {
+        const group_id = req.params.id;
+        const id = req.params.expenseId;
+        const deletedCount = await db.deleteExpense(id, group_id);
+        if (deletedCount === 0) {
+            return res.status(404).json({message: "Nothing was deleted"});
+        }
+        res.json({message: "expense deleted"});
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({message: "Something went wrong"});
+    }
 }
 
 module.exports = {

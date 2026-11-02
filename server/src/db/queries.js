@@ -85,8 +85,9 @@ async function getExpensesByGroupId(group_id) {
     return rows;
 }
 
-async function deleteExpense (id) {
-    await pool.query ("DELETE FROM expenses WHERE id=$1", [id]);
+async function deleteExpense (id, group_id) {
+    const result = await pool.query ("DELETE FROM expenses WHERE id=$1 AND group_id=$2", [id, group_id]);
+    return result.rowCount; //returns how many rows were affected
 }
 
 //MEMBERS (FOR EXPENSE SPLITS)
