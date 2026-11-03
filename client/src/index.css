@@ -141,3 +141,11 @@ input:-webkit-autofill {
         opacity: 0.4;
     }
 }
+
+.group-row {
+    margin-bottom: 0rem;
+}
+
+.group-row .list-item {
+    margin-bottom: 0;
+}
