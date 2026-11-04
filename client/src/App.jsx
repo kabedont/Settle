@@ -6,7 +6,7 @@ import GroupDetail from './pages/GroupDetail.jsx';
 import CreateGroup from './pages/CreateGroup.jsx';
 import CreateExpense from './pages/CreateExpense.jsx';
 import CreateSettlement from './pages/CreateSettlement.jsx';
-import './App.css';
+import './index.css';
 
 function AppContent() {
   return(
