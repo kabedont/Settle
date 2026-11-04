@@ -27,6 +27,8 @@ body {
     margin: 0 auto;
     padding: 1.5rem 1.5rem;
     min-height: 100vh;
+    border-left: 1px solid rgba(0, 0, 0, 0.06);
+    border-right: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 h1 {
