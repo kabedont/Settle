@@ -89,7 +89,7 @@ function CreateSettlement() {
 
                                 const entry = userOwedList.find((o) => o.creditor_id === Number(selectedId));
                                 if (entry) {
-                                    setAmountOwed(entry.amount);
+                                    setAmountOwed(entry.amount.toFixed(2));
                                     setCurrency(entry.currency);
                                 }
                             }}
