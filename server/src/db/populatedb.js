@@ -1,3 +1,5 @@
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "../../.env") });
 const {Client} = require("pg");
 
 const SQL = `
@@ -50,9 +52,13 @@ CREATE TABLE IF NOT EXISTS settlements (
 `;
 
 async function main() {
+    if (!process.env.DATABASE_URL){
+        throw new Error("DATABASE_URL is not set. Copy .env.example to .env and fill it in.");
+    }
+
     console.log("seeding...");
     const client = new Client({
-        connectionString:"postgresql://postgres:postgres@localhost:5432/settle"
+        connectionString: process.env.DATABASE_URL,
     });
     await client.connect();
     await client.query(SQL);
