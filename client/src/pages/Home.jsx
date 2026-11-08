@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { API_URL } from "../config";
 
 function Home() {
     const[user, setUser] = useState("");
@@ -8,7 +9,7 @@ function Home() {
 
     //fetch data for groups list
     const groupsGet = async (e) => {
-        const list = await fetch("http://localhost:5000/api/groups", {
+        const list = await fetch(`${API_URL}/api/groups`, {
             credentials: "include",
         })
         .then(res => res.json());
@@ -18,7 +19,7 @@ function Home() {
     useEffect(() => {
         //fetch user's name
         const nameGet = async (e) => {
-            const data = await fetch("http://localhost:5000/api/auth/me", { 
+            const data = await fetch(`${API_URL}/api/auth/me`, { 
                 credentials: "include",
             })
             .then(res => res.json());
@@ -44,7 +45,7 @@ function Home() {
             return;
         }
 
-        const response = await fetch(`http://localhost:5000/api/groups/${id}`, {
+        const response = await fetch(`${API_URL}/api/groups/${id}`, {
             method: "DELETE",
             credentials: "include",
         })
