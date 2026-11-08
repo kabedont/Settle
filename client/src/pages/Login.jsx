@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from "../config";
 
 function Login() {
     const[email, setEmail] = useState("");
@@ -10,7 +11,7 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault(); //stops page from reloading
 
-        const response = await fetch("http://localhost:5000/api/auth/log-in", {
+        const response = await fetch(`${API_URL}/api/auth/log-in`, {
             method: "POST",
             credentials: "include",
             headers: {

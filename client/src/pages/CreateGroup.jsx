@@ -1,5 +1,6 @@
 import {useState} from "react";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 
 function CreateGroup() {
     {/*FUTURE TO-DO: convert to modal*/}
@@ -9,7 +10,7 @@ function CreateGroup() {
     const handleSave = async (e) => {
         e.preventDefault();
 
-        const response = await fetch("http://localhost:5000/api/groups/", {
+        const response = await fetch(`${API_URL}/api/groups/`, {
             method: "POST",
             credentials: "include",
             headers: {

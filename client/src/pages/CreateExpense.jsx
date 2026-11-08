@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 
 function CreateExpense() {
     const[group, setGroup] = useState("");
@@ -14,7 +15,7 @@ function CreateExpense() {
     useEffect(() => {
         //fetch group
         const groupGet = async (e) => {
-            const group = await fetch(`http://localhost:5000/api/groups/${id}`, {
+            const group = await fetch(`${API_URL}/api/groups/${id}`, {
                 credentials: "include",
             })
             .then(res => res.json());
@@ -24,7 +25,7 @@ function CreateExpense() {
 
         //fetch logged in user
         const userGet = async (e) => {
-            const user = await fetch(`http://localhost:5000/api/auth/me`, {
+            const user = await fetch(`${API_URL}/api/auth/me`, {
                 credentials:"include",
             })
             .then(res => res.json());
@@ -37,7 +38,7 @@ function CreateExpense() {
     const handleCreate = async (e) => {
         e.preventDefault();
 
-        const response = await fetch (`http://localhost:5000/api/groups/${id}/expenses`, {
+        const response = await fetch (`${API_URL}/api/groups/${id}/expenses`, {
             method: "POST",
             credentials: "include",
             headers: {

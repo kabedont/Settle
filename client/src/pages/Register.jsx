@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 
 function Register() {
     const[name, setName] = useState("");
@@ -11,7 +12,7 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await fetch("http://localhost:5000/api/auth/sign-up", {
+        const response = await fetch(`${API_URL}/api/auth/sign-up`, {
             method: "POST",
             credentials: "include",
             headers: {

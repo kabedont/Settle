@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 
 function CreateSettlement() {
     //from_user, to_user, amount, currency
@@ -17,7 +18,7 @@ function CreateSettlement() {
     useEffect(() => {
         //fetch group
         const groupGet = async (e) => {
-            const group = await fetch(`http://localhost:5000/api/groups/${id}`, {
+            const group = await fetch(`${API_URL}/api/groups/${id}`, {
                 credentials: "include",
             })
             .then(res => res.json());
@@ -29,14 +30,14 @@ function CreateSettlement() {
         const fetchData = async (e) => {
             
             //fetch logged in user FIRST, and wait
-            const user = await fetch(`http://localhost:5000/api/auth/me`, {
+            const user = await fetch(`${API_URL}/api/auth/me`, {
                 credentials:"include",
             })
             .then(res => res.json());
             setLoggedInUser(user);
 
             //fetch pairwise balance (user owed list)
-            const pair = await fetch(`http://localhost:5000/api/groups/${id}/pairwise-balances`, {
+            const pair = await fetch(`${API_URL}/api/groups/${id}/pairwise-balances`, {
                 credentials:"include",
             })
             .then(res => res.json());
@@ -52,7 +53,7 @@ function CreateSettlement() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await fetch(`http://localhost:5000/api/groups/${id}/settlements`, {
+        const response = await fetch(`${API_URL}/api/groups/${id}/settlements`, {
             method: "POST",
             credentials: "include",
             headers: {

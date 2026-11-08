@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 
 function GroupDetail() {
     const[group, setGroup] = useState("");
@@ -15,7 +16,7 @@ function GroupDetail() {
 
     //fetch members function
     const membersGet = async (e) => {
-        const list = await fetch(`http://localhost:5000/api/groups/${id}/members`, {
+        const list = await fetch(`${API_URL}/api/groups/${id}/members`, {
             credentials: "include",
         })
         .then(res => res.json());
@@ -24,7 +25,7 @@ function GroupDetail() {
 
     //fetch expenses
     const expensesGet = async (e) => {
-        const list = await fetch(`http://localhost:5000/api/groups/${id}/expenses`, {
+        const list = await fetch(`${API_URL}/api/groups/${id}/expenses`, {
             credentials: "include",
         })
         .then(res => res.json());
@@ -33,7 +34,7 @@ function GroupDetail() {
 
     //fetch pairwise balance
     const pairwiseBalanceGet = async (e) => {
-        const data = await fetch(`http://localhost:5000/api/groups/${id}/pairwise-balances`, {
+        const data = await fetch(`${API_URL}/api/groups/${id}/pairwise-balances`, {
             credentials: "include",
         })
         .then(res => res.json());
@@ -42,7 +43,7 @@ function GroupDetail() {
 
     //fetch balance
     const balanceGet = async (e) => {
-        const data = await fetch(`http://localhost:5000/api/groups/${id}/balances`, {
+        const data = await fetch(`${API_URL}/api/groups/${id}/balances`, {
             credentials: "include",
         })
         .then(res => res.json());
@@ -52,7 +53,7 @@ function GroupDetail() {
     useEffect(() => {
         //fetch group
         const groupGet = async (e) => {
-            const group = await fetch(`http://localhost:5000/api/groups/${id}`, {
+            const group = await fetch(`${API_URL}/api/groups/${id}`, {
                 credentials: "include",
             })
             .then(res => res.json());
@@ -68,7 +69,7 @@ function GroupDetail() {
 
         //fetch logged in user
         const userGet = async (e) => {
-            const user = await fetch(`http://localhost:5000/api/auth/me`, {
+            const user = await fetch(`${API_URL}/api/auth/me`, {
                 credentials:"include",
             })
             .then(res => res.json());
@@ -98,7 +99,7 @@ function GroupDetail() {
     const handleAdd = async (e) => {
         e.preventDefault();
 
-        const response = await fetch(`http://localhost:5000/api/groups/${id}/members`, {
+        const response = await fetch(`${API_URL}/api/groups/${id}/members`, {
             method: "POST",
             credentials: "include",
             headers: {
@@ -117,7 +118,7 @@ function GroupDetail() {
 
     //delete expense button
     const handleDelete = async (expenseId) => {
-        const response = await fetch(`http://localhost:5000/api/groups/${id}/expenses/${expenseId}`, {
+        const response = await fetch(`${API_URL}/api/groups/${id}/expenses/${expenseId}`, {
             method: "DELETE",
             credentials: "include",
         })
