@@ -1,10 +1,12 @@
-//auth
+//auth, db
 const isProd = process.env.NODE_ENV === "production";
+const pool = require("./db/pool");
 
 //core
 const express = require('express');
 const cors = require('cors');
 const session = require("express-session");
+const pgSession = require("connect-pg-simple")(session);
 const passport = require("passport");
 
 //config
@@ -29,6 +31,9 @@ app.use(cors({
 app.use (express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
+    store: new pgSession({
+        pool: pool,
+    }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
