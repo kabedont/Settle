@@ -1,3 +1,6 @@
+//auth
+const isProd = process.env.NODE_ENV === "production";
+
 //core
 const express = require('express');
 const cors = require('cors');
@@ -17,13 +20,24 @@ const settlementsRouter = require('./routes/settlementsRouter');
 //app
 const app = express();
 
+app.set("trust proxy", 1);
+
 app.use(cors({
     origin: process.env.CLIENT_URL,
     credentials: true,
 }));
 app.use (express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        secure: isProd,
+        sameSite: isProd ? "none" : "lax",
+    },
+}));
 app.use(passport.session());
 app.use("/api/auth", authRouter);
 app.use("/api/groups", groupsRouter);
