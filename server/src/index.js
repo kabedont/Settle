@@ -8,6 +8,7 @@ const cors = require('cors');
 const session = require("express-session");
 const pgSession = require("connect-pg-simple")(session);
 const passport = require("passport");
+const path = require("path");
 
 //config
 require('dotenv').config();
@@ -24,8 +25,10 @@ const app = express();
 
 app.set("trust proxy", 1);
 
+app.use(express.static(path.join(__dirname,'../../client/dist')));
+
 app.use(cors({
-    origin: process.env.CLIENT_URL,
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
     credentials: true,
 }));
 app.use (express.json());
@@ -51,6 +54,10 @@ app.use("/api/settlements", settlementsRouter);
 
 app.get('/api/test', (req, res) => {
     res.json({message: 'Settle backend is running!'});
+});
+
+app.get("/{*splat}", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../client/dist", 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
