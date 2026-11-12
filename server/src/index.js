@@ -56,6 +56,10 @@ app.get('/api/test', (req, res) => {
     res.json({message: 'Settle backend is running!'});
 });
 
+app.all("/api/{*splat}", (req, res) => {
+    res.status(404).json({message: "Not found"});
+});
+
 app.get("/{*splat}", (req, res) => {
     res.sendFile(path.join(__dirname, "../../client/dist", 'index.html'));
 });
