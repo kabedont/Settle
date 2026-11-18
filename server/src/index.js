@@ -8,7 +8,6 @@ const cors = require('cors');
 const session = require("express-session");
 const pgSession = require("connect-pg-simple")(session);
 const passport = require("passport");
-const path = require("path");
 
 //config
 require('dotenv').config();
@@ -24,8 +23,6 @@ const settlementsRouter = require('./routes/settlementsRouter');
 const app = express();
 
 app.set("trust proxy", 1);
-
-app.use(express.static(path.join(__dirname,'../../client/dist')));
 
 app.use(cors({
     origin: process.env.CLIENT_URL || "http://localhost:5173",
@@ -60,11 +57,11 @@ app.all("/api/{*splat}", (req, res) => {
     res.status(404).json({message: "Not found"});
 });
 
-app.get("/{*splat}", (req, res) => {
-    res.sendFile(path.join(__dirname, "../../client/dist", 'index.html'));
-});
-
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+module.exports = app;
