@@ -10,7 +10,7 @@ function CreateGroup() {
     const handleSave = async (e) => {
         e.preventDefault();
 
-        const response = await fetch(`${API_URL}/api/groups/`, {
+        const response = await fetch(`${API_URL}/api/groups`, {
             method: "POST",
             credentials: "include",
             headers: {
