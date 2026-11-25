@@ -11,6 +11,7 @@ function CreateSettlement() {
     const[amountOwed, setAmountOwed] = useState("");
     const[currency, setCurrency] = useState("");
     const[errorMessage, setErrorMessage] = useState("");
+    const [toUser, setToUser] = useState("");
     const {id} = useParams();
     const navigate = useNavigate();
 
@@ -59,7 +60,7 @@ function CreateSettlement() {
             headers: {
                 "Content-type": "application/json"
             },
-            body: JSON.stringify({to_user: userOwed, amount: amountOwed, currency}),
+            body: JSON.stringify({to_user: toUser, amount: amountOwed, currency}),
         })
 
         if(response.ok){
@@ -70,6 +71,8 @@ function CreateSettlement() {
             setErrorMessage(data.message);
         }
     }
+
+    const optionValue = (entry) => `${entry.creditor_id}-${entry.currency}`;
 
     return(
         <>
@@ -88,17 +91,22 @@ function CreateSettlement() {
                                 const selectedId = e.target.value;
                                 setUserOwed(selectedId);
 
-                                const entry = userOwedList.find((o) => o.creditor_id === Number(selectedId));
+                                const entry = userOwedList.find((o) => optionValue(o) === selectedId);
                                 if (entry) {
+                                    setToUser(entry.creditor_id);
                                     setAmountOwed(entry.amount.toFixed(2));
                                     setCurrency(entry.currency);
+                                } else {
+                                    setToUser("");
+                                    setAmountOwed("");
+                                    setCurrency("");
                                 }
                             }}
                         >
                             <option value="">Select who to pay</option>
                             {userOwedList.map((entry) => (
-                                <option key={entry.creditor_id} value={entry.creditor_id}>
-                                    {entry.creditor_name}
+                                <option key={optionValue(entry)} value={optionValue(entry)}>
+                                    {`${entry.creditor_name} (${entry.currency})`}
                                 </option>
                             ))}
                         </select>
