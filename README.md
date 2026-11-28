@@ -21,14 +21,16 @@ Split bills with friends without doing the maths yourself. Add an expense, and S
 
 ## Screenshots
 
-| Home | Add an expense |
-|---|---|
-| ![Home](docs/screenshots/home.png) | ![Add expense](docs/screenshots/add-expense.png) |
+### Add an expense
+![Add expense](docs/screenshots/add-expense.png)
 
-| Settle up | Delete on hover |
-|---|---|
-| ![Settle up](docs/screenshots/settle-up.png) | ![Delete on hover](docs/screenshots/delete-hover.gif) |
+### Settle up
+![Settle up](docs/screenshots/settle-up.png)
 
+### Delete on hover
+![Delete on hover](docs/screenshots/delete-hover.gif)
+
+### On mobile
 <img src="docs/screenshots/mobile.jpg" alt="Group page on a phone" width="300">
 
 ## Tech stack
